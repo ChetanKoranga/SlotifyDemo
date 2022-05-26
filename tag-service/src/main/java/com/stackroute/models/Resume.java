@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @ToString
 public class Resume {
-    private String filename;
+    private String fileName;
     private String file;
     private Long fileSize;
 }

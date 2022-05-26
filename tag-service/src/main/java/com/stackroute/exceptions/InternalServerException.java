@@ -1,6 +1,6 @@
 /*
 author: chetan.koranga,
-date of creation: 19/05/22
+date of creation: 24/05/22
 */
 
 package com.stackroute.exceptions;
@@ -8,11 +8,8 @@ package com.stackroute.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundExceptions extends RuntimeException {
-
-    public ResourceNotFoundExceptions(String message) {
+public class InternalServerException extends RuntimeException{
+    public InternalServerException(String message) {
         super(message);
     }
 }

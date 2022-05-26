@@ -5,9 +5,12 @@ date of creation: 18/05/22
 
 package com.stackroute.controllers;
 
+import com.stackroute.exceptions.InternalServerException;
+import com.stackroute.exceptions.NotFoundException;
 import com.stackroute.models.SlotUpdate;
 import com.stackroute.services.TagService;
 import com.stackroute.models.SlotsBooked;
+import com.stackroute.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,28 +32,38 @@ public class TagController {
     // Get slots by TAG member emailId
     @GetMapping("/slot/tag/{email}")
     public ResponseEntity<?> slotByTag(@PathVariable("email") String email) {
-        return new ResponseEntity<>(tagService.findByTagEmailId(email), HttpStatus.OK);
+        try {
+            return ResponseEntity.ok(new Response("SUCCESS", tagService.findByTagEmailId(email), ""));
+        } catch (InternalServerException e) {
+            throw new InternalServerException("Something bad happened");
+        }
+
     }
 
-//// Get interviewer by tech tack
-//    @PostMapping("/interviewers")
-//    public ResponseEntity<?> showInterviewers(){
-//        return new ResponseEntity<>("Interviewers list", HttpStatus.OK);
-//    }
-
+    // Book Slot
     @PostMapping("/book-slot")
     public ResponseEntity<?> bookSlot(@RequestBody SlotsBooked slotData) {
-        SlotsBooked slotsBooked = tagService.save(slotData);
-        return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
+        try{
+            SlotsBooked slotsBooked = tagService.save(slotData);
+            return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
+        }
+        catch (InternalServerException e) {
+            throw new InternalServerException("Something bad happened");
+        }
+
     }
 
+    // Update booked slot
     @PatchMapping("/update-slot")
     public ResponseEntity<?> updateSlot(@RequestBody SlotUpdate slotData) throws Exception {
         try {
             SlotsBooked slotsBooked = tagService.updateSlot(slotData);
             return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (NotFoundException e) {
+            throw new NotFoundException("Slot not found");
+        }
+        catch (InternalServerException e) {
+            throw new InternalServerException("Something bad happened");
         }
     }
 }
