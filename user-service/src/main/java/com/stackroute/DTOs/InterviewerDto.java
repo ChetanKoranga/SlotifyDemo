@@ -9,13 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InterviewerDto {
-
-
-    private String firstName;
-    private String  lastName;
-    private Long mobileNumber;
-    private String emailId;
-    private String techTrack;
+    private String userName;
     private String password;
-
+    private String userRole;
+    private String email;
 }
