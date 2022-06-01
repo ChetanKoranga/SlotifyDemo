@@ -1,7 +1,5 @@
 package com.stackroute.controllers;
 
-import com.google.gson.Gson;
-import com.stackroute.DTOs.CandidateDto;
 import com.stackroute.DTOs.InterviewerDto;
 import com.stackroute.DTOs.TAGMemeberDto;
 import com.stackroute.Models.Candidate;
@@ -15,41 +13,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
 public class userController {
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Autowired
     private UserService userService;
 
+
     //registering new interviewer
-
     @PostMapping("/register-interviewer")
-    public ResponseEntity<InterviewerDto> registerInterviewer(@RequestBody InterviewerDto interviewerDto) throws AlreadyExitException {
-
-        Interviewer interviewerRequest = modelMapper.map(interviewerDto, Interviewer.class);
-        Interviewer interviewer = userService.registerInterviewer(interviewerRequest);
-        InterviewerDto inteviewerResponse = modelMapper.map(interviewer, InterviewerDto.class);
-
-        return new ResponseEntity<InterviewerDto>(inteviewerResponse, HttpStatus.CREATED);
+    public ResponseEntity<?> registerInterviewer(@RequestBody InterviewerDto interviewerDto) throws AlreadyExitException {
+        userService.registerInterviewer(interviewerDto);
+        return new ResponseEntity<>("Registration Successful", HttpStatus.CREATED);
     }
+
     //registering new TAG team member
-
     @PostMapping("/register-TAGMember")
-    public ResponseEntity<TAGMemeberDto> registerTAGMember(@RequestBody TAGMemeberDto tagMemeberDto) {
-
-        TAGMemeber tagMemeberRequest = modelMapper.map(tagMemeberDto, TAGMemeber.class);
-        TAGMemeber tagMemeber = userService.registerTAGMember(tagMemeberRequest);
-        TAGMemeberDto tagmemberResponse = modelMapper.map(tagMemeber, TAGMemeberDto.class);
-
-        return new ResponseEntity<TAGMemeberDto>(tagmemberResponse, HttpStatus.CREATED);
+    public ResponseEntity<?> registerTAGMember(@RequestBody TAGMemeberDto tagMemeberDto) throws Exception {
+        userService.registerTAGMember(tagMemeberDto);
+        return new ResponseEntity<>("Registration Successful", HttpStatus.CREATED);
     }
    /* @PostMapping("/register-Candidate")
     public ResponseEntity<CandidateDto> registerCandidate(@RequestBody CandidateDto candidateDto) {
@@ -63,11 +49,11 @@ public class userController {
 
 
       }*/
-             @PostMapping("/register-Candidate")
-             public ResponseEntity<Candidate> registerCandidate (@RequestBody Candidate candidate){
-                 userService.registerCandidate(candidate);
-                 return ResponseEntity.status(HttpStatus.CREATED).build();
-              }
+     @PostMapping("/register-Candidate")
+     public ResponseEntity<Candidate> registerCandidate (@RequestBody Candidate candidate){
+         userService.registerCandidate(candidate);
+         return ResponseEntity.status(HttpStatus.CREATED).build();
+      }
 
              // updating interviewer
 

@@ -1,18 +1,23 @@
 package com.stackroute.service;
 
+import com.stackroute.DTOs.InterviewerDto;
+import com.stackroute.DTOs.TAGMemeberDto;
 import com.stackroute.Models.Candidate;
 import com.stackroute.Models.Interviewer;
 import com.stackroute.Models.TAGMemeber;
 import com.stackroute.exceptions.AlreadyExitException;
 import com.stackroute.exceptions.ResourceNotFoundException;
+import com.stackroute.publisher.ProducerDto;
+import com.stackroute.publisher.UserPublisher;
 import com.stackroute.repository.CandidateRepo;
 import com.stackroute.repository.InterviewerRepo;
 import com.stackroute.repository.TAGMemeberRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -28,18 +33,52 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CandidateRepo candidateRepo;
 
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    UserPublisher userPublisher;
+
+
     @Override
-    public Interviewer registerInterviewer(Interviewer interviewer)throws AlreadyExitException {
-        if (this.interviewerRepo.findById(interviewer.getEmailId()).isPresent()) {
+    public InterviewerDto registerInterviewer(InterviewerDto interviewerDto) throws AlreadyExitException {
+        Interviewer interviewer;
+        InterviewerDto interviewerResoponse;
+        if (this.interviewerRepo.findById(interviewerDto.getEmailId()).isPresent()) {
             throw new AlreadyExitException();
         } else {
-            return interviewerRepo.save(interviewer);
+            Interviewer interviewerRequest = modelMapper.map(interviewerDto, Interviewer.class);
+            try {
+                ProducerDto producerDTO = new ProducerDto();
+                producerDTO.setEmail(interviewerDto.getEmailId());
+                producerDTO.setUserName(interviewerDto.getFirstName() + " " + interviewerDto.getLastName());
+                producerDTO.setUserRole("Interviewer");
+                producerDTO.setPassword(new BCryptPasswordEncoder().encode(interviewerDto.getPassword()));
+                userPublisher.saveUserDetails(producerDTO);
+                interviewer = interviewerRepo.save(interviewerRequest);
+                interviewerResoponse = modelMapper.map(interviewer, InterviewerDto.class);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return interviewerResoponse;
         }
     }
 
     @Override
-    public TAGMemeber registerTAGMember(TAGMemeber tagMemeber) {
-        return tagMemeberRepo.save(tagMemeber);
+    public TAGMemeberDto registerTAGMember(TAGMemeberDto tagMemeberDto) throws Exception {
+        TAGMemeber tagMemeber;
+        TAGMemeberDto tagmemberResponse;
+        ProducerDto producerDTO = new ProducerDto();
+        producerDTO.setEmail(tagMemeberDto.getEmailId());
+        producerDTO.setUserName(tagMemeberDto.getFirstName() + " " + tagMemeberDto.getLastName());
+        producerDTO.setUserRole("TAG");
+        producerDTO.setPassword(new BCryptPasswordEncoder().encode(tagMemeberDto.getPassword()));
+        userPublisher.saveUserDetails(producerDTO);
+        TAGMemeber tagMemeberRequest = modelMapper.map(tagMemeberDto, TAGMemeber.class);
+        tagMemeber = tagMemeberRepo.save(tagMemeberRequest);
+        tagmemberResponse = modelMapper.map(tagMemeber, TAGMemeberDto.class);
+        return tagmemberResponse;
     }
 
     @Override
@@ -51,17 +90,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Interviewer updateInterviewer(Interviewer interviewer) throws ResourceNotFoundException {
 
-        Optional<Interviewer> Slotify1=this.interviewerRepo.findById(interviewer.getEmailId());
+        Optional<Interviewer> Slotify1 = this.interviewerRepo.findById(interviewer.getEmailId());
         if (this.interviewerRepo.findById(interviewer.getEmailId()).isPresent()) {
-        Interviewer editInterviewer=Slotify1.get();
-        editInterviewer.setEmailId(interviewer.getEmailId());
-        editInterviewer.setFirstName(interviewer.getFirstName());
-        editInterviewer.setLastName(interviewer.getLastName());
-        editInterviewer.setMobileNumber(interviewer.getMobileNumber());
-        editInterviewer.setTechTrack(interviewer.getTechTrack());
-        interviewerRepo.save(editInterviewer);
-        return editInterviewer;
-    }else{
+            Interviewer editInterviewer = Slotify1.get();
+            editInterviewer.setEmailId(interviewer.getEmailId());
+            editInterviewer.setFirstName(interviewer.getFirstName());
+            editInterviewer.setLastName(interviewer.getLastName());
+            editInterviewer.setMobileNumber(interviewer.getMobileNumber());
+            editInterviewer.setTechTrack(interviewer.getTechTrack());
+            interviewerRepo.save(editInterviewer);
+            return editInterviewer;
+        } else {
             throw new ResourceNotFoundException();
         }
     }
@@ -69,8 +108,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public TAGMemeber updateTAGMember(TAGMemeber tagMemeber) {
 
-        Optional<TAGMemeber> Slotify1=this.tagMemeberRepo.findById(tagMemeber.getEmailId());
-        TAGMemeber editTAGMember=Slotify1.get();
+        Optional<TAGMemeber> Slotify1 = this.tagMemeberRepo.findById(tagMemeber.getEmailId());
+        TAGMemeber editTAGMember = Slotify1.get();
         editTAGMember.setEmailId(tagMemeber.getEmailId());
         editTAGMember.setFirstName(tagMemeber.getFirstName());
         editTAGMember.setLastName(tagMemeber.getLastName());
@@ -81,8 +120,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Candidate updateCandidate(Candidate candidate) {
 
-        Optional<Candidate> Slotify2=this.candidateRepo.findById(candidate.getEmailId());
-        Candidate editCandidte=Slotify2.get();
+        Optional<Candidate> Slotify2 = this.candidateRepo.findById(candidate.getEmailId());
+        Candidate editCandidte = Slotify2.get();
         editCandidte.setEmailId(candidate.getEmailId());
         editCandidte.setFirstName(candidate.getFirstName());
         editCandidte.setLastName(candidate.getLastName());
@@ -97,7 +136,7 @@ public class UserServiceImpl implements UserService {
     public List<Interviewer> getByTechTrack(String techTrack) {
         return interviewerRepo.findByTechTrack(techTrack);
     }
-    }
+}
 
 
 
