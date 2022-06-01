@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @ToString
 @Component
-public class ProducerDto {
+public class PublisherDto {
     private String userName;
     private String password;
     private String userRole;

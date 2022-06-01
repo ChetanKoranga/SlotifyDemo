@@ -17,7 +17,7 @@ public class EmailPublisher {
     @Autowired
     RabbitTemplate template;
 
-    public boolean saveUserDetails(ProducerDto producerDTO) throws Exception {
+    public boolean saveUserDetails(PublisherDto producerDTO) throws Exception {
         try {
             System.out.println("Sent to queue:  " + producerDTO);
             template.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ROUTING_KEY, producerDTO);

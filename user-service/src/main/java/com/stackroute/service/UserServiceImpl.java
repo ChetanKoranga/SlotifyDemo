@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserPublisher userPublisher;
-//    UserPublisher userPublisher = new UserPublisher();
+
 
     @Override
     public InterviewerDto registerInterviewer(InterviewerDto interviewerDto) throws AlreadyExitException {

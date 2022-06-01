@@ -8,11 +8,11 @@ package com.stackroute.publisher;
 import com.stackroute.Config.MessagingConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 
-@Configuration
+@Component
 public class UserPublisher {
 
     @Autowired
@@ -25,8 +25,6 @@ public class UserPublisher {
         } catch (Exception e) {
             throw new Exception("Something went bad in publishing message to queue" + e);
         }
-//        order.setOrderId(UUID.randomUUID().toString());s
-//        ProducerDTO producerDTO = new OrderStatus(order, "PROGRESS", "Your order is received and is in progress with the restaurant " + restaurantName);
         return true;
     }
 }

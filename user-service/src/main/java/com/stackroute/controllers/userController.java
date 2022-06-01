@@ -30,6 +30,7 @@ public class userController {
         userService.registerInterviewer(interviewerDto);
         return new ResponseEntity<>("Registration Successful", HttpStatus.CREATED);
     }
+
     //registering new TAG team member
     @PostMapping("/register-TAGMember")
     public ResponseEntity<?> registerTAGMember(@RequestBody TAGMemeberDto tagMemeberDto) throws Exception {
@@ -48,11 +49,11 @@ public class userController {
 
 
       }*/
-   @PostMapping("/register-Candidate")
-   public ResponseEntity<Candidate> registerCandidate(@RequestBody Candidate candidate) {
-       userService.registerCandidate(candidate);
-       return ResponseEntity.status(HttpStatus.CREATED).build();
-   }
+     @PostMapping("/register-Candidate")
+     public ResponseEntity<Candidate> registerCandidate (@RequestBody Candidate candidate){
+         userService.registerCandidate(candidate);
+         return ResponseEntity.status(HttpStatus.CREATED).build();
+      }
 
              // updating interviewer
 
