@@ -3,17 +3,16 @@ author: chetan.koranga,
 date of creation: 31/05/22
 */
 
-package com.stackroute.publisher;
+package com.stackroute.interviewerservice.publisher;
 
 import com.stackroute.Config.MessagingConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class UserPublisher {
+public class EmailPublisher {
 
     @Autowired
     RabbitTemplate template;

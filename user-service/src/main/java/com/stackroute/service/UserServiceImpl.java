@@ -1,16 +1,20 @@
 package com.stackroute.service;
 
 import com.stackroute.DTOs.InterviewerDto;
+import com.stackroute.DTOs.TAGMemeberDto;
 import com.stackroute.Models.Candidate;
 import com.stackroute.Models.Interviewer;
 import com.stackroute.Models.TAGMemeber;
 import com.stackroute.exceptions.AlreadyExitException;
 import com.stackroute.exceptions.ResourceNotFoundException;
+import com.stackroute.publisher.ProducerDto;
 import com.stackroute.publisher.UserPublisher;
 import com.stackroute.repository.CandidateRepo;
 import com.stackroute.repository.InterviewerRepo;
 import com.stackroute.repository.TAGMemeberRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -31,31 +35,50 @@ public class UserServiceImpl implements UserService {
 
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     UserPublisher userPublisher;
+//    UserPublisher userPublisher = new UserPublisher();
 
     @Override
-    public Interviewer registerInterviewer(Interviewer interviewer) throws AlreadyExitException {
-
-        if (this.interviewerRepo.findById(interviewer.getEmailId()).isPresent()) {
+    public InterviewerDto registerInterviewer(InterviewerDto interviewerDto) throws AlreadyExitException {
+        Interviewer interviewer;
+        InterviewerDto interviewerResoponse;
+        if (this.interviewerRepo.findById(interviewerDto.getEmailId()).isPresent()) {
             throw new AlreadyExitException();
         } else {
+            Interviewer interviewerRequest = modelMapper.map(interviewerDto, Interviewer.class);
             try {
-                InterviewerDto producerDTO = new InterviewerDto();
-                producerDTO.setEmail(interviewer.getEmailId());
-                producerDTO.setUserName(interviewer.getFirstName() + " " + interviewer.getLastName());
+                ProducerDto producerDTO = new ProducerDto();
+                producerDTO.setEmail(interviewerDto.getEmailId());
+                producerDTO.setUserName(interviewerDto.getFirstName() + " " + interviewerDto.getLastName());
                 producerDTO.setUserRole("Interviewer");
-//                producerDTO.setPassword(new BCryptPasswordEncoder().encode("abcd"));
+                producerDTO.setPassword(new BCryptPasswordEncoder().encode(interviewerDto.getPassword()));
                 userPublisher.saveUserDetails(producerDTO);
+                interviewer = interviewerRepo.save(interviewerRequest);
+                interviewerResoponse = modelMapper.map(interviewer, InterviewerDto.class);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            return interviewerRepo.save(interviewer);
+            return interviewerResoponse;
         }
     }
 
     @Override
-    public TAGMemeber registerTAGMember(TAGMemeber tagMemeber) {
-        return tagMemeberRepo.save(tagMemeber);
+    public TAGMemeberDto registerTAGMember(TAGMemeberDto tagMemeberDto) throws Exception {
+        TAGMemeber tagMemeber;
+        TAGMemeberDto tagmemberResponse;
+        ProducerDto producerDTO = new ProducerDto();
+        producerDTO.setEmail(tagMemeberDto.getEmailId());
+        producerDTO.setUserName(tagMemeberDto.getFirstName() + " " + tagMemeberDto.getLastName());
+        producerDTO.setUserRole("TAG");
+        producerDTO.setPassword(new BCryptPasswordEncoder().encode(tagMemeberDto.getPassword()));
+        userPublisher.saveUserDetails(producerDTO);
+        TAGMemeber tagMemeberRequest = modelMapper.map(tagMemeberDto, TAGMemeber.class);
+        tagMemeber = tagMemeberRepo.save(tagMemeberRequest);
+        tagmemberResponse = modelMapper.map(tagMemeber, TAGMemeberDto.class);
+        return tagmemberResponse;
     }
 
     @Override

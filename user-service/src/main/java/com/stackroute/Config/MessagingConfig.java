@@ -40,10 +40,10 @@ public class MessagingConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-    @Bean
-    public AmqpTemplate template(ConnectionFactory connectionFactory){
-        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(converter());
-        return rabbitTemplate;
-    }
+//    @Bean
+//    public AmqpTemplate template(ConnectionFactory connectionFactory){
+//        final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+//        rabbitTemplate.setMessageConverter(converter());
+//        return rabbitTemplate;
+//    }
 }
