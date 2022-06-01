@@ -1,0 +1,58 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        #Route Mapping
+      - id: authentication-service              
+        uri: http://localhost:8095/         
+        predicates:
+        - Path=/api/v1/authenticationservice/**          
+        
+        
+           #Route Mapping - With out Filters - Version 2 Request
+      - id: candidate-service
+        uri: http://localhost:8087/
+        predicates:
+        - Path=/api/v1/candidateservice/**
+
+        #Route Mapping - With Filters - Version 1 Request
+      - id: config-service
+        uri: http://localhost:8088/
+        predicates:
+        - Path=/api/v1/configservice/** 
+        
+           #Route Mapping - With out Filters - Version 2 Request
+      - id: email-service
+        uri: http://localhost:8075/
+        predicates:
+        - Path=/api/v1/emailservice/**
+
+        #Route Mapping - With Filters - Version 1 Request
+      - id: eureka-service
+        uri: http://localhost:8761/
+        predicates:
+        - Path=/api/v1/eurekaservice/** 
+        
+           #Route Mapping - With out Filters - Version 2 Request
+      - id: interview-service
+        uri: http://localhost:8097/
+        predicates:
+        - Path=/api/v1/interviewservice/**
+
+        #Route Mapping - With Filters - Version 1 Request
+      - id: tag-service
+        uri: http://localhost:8070/
+        predicates:
+        - Path=/api/v1/tagservice/** 
+        
+        
+        #Route Mapping - With Filters - Version 1 Request
+      - id: user-service
+        uri: http://localhost:8099/
+        predicates:
+        - Path=/api/v1/userservice/** 
+        
+         
