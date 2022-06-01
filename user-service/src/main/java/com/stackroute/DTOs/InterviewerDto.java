@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InterviewerDto {
-
-
     private String firstName;
     private String  lastName;
     private Long mobileNumber;

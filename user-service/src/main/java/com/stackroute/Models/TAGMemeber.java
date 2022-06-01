@@ -11,9 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document(collection = "tagmember_data")
 public class TAGMemeber {
-
     @Id
-
     private String emailId;
     private String firstName;
     private String  lastName;
