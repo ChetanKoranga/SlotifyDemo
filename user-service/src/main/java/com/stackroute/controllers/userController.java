@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/userservice")
 public class userController {
     @Autowired
     private ModelMapper modelMapper;
@@ -30,6 +30,12 @@ public class userController {
     private UserService userService;
 
     //registering new interviewer
+    
+    @GetMapping("/testapigateway")
+    public String testapi ( ) {
+    	return "This is just to check if api gateway (USER SERVICE) is redirected to this controller ot not,"
+    			+ " in the next iteration this function can be removed ";
+    }
 
     @PostMapping("/register-interviewer")
     public ResponseEntity<InterviewerDto> registerInterviewer(@RequestBody InterviewerDto interviewerDto) throws AlreadyExitException {
