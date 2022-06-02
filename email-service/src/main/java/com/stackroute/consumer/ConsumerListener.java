@@ -6,7 +6,6 @@ date of creation: 30/05/22
 package com.stackroute.consumer;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,22 +17,22 @@ public class ConsumerListener {
 
 
     @RabbitListener(queues = EMAIL_NOTIFICATION_TO_INTERVIEWER)
-    public void emailToInterviewer(ConsumerDTO consumerDTO) throws Exception {
+    public void emailToInterviewer(ConsumerDto consumerDTO) throws Exception {
         try{
-            System.out.println("");
+            System.out.println("Received Message: "+consumerDTO);
         }
         catch (Exception e){
             throw new Exception(e);
         }
     }
 
-    @RabbitListener(queues = EMAIL_NOTIFICATION_TO_TAG)
-    public void emailToTag(ConsumerDTO consumerDTO) throws Exception {
-        try{
-            System.out.println("");
-        }
-        catch (Exception e){
-            throw new Exception(e);
-        }
-    }
+//    @RabbitListener(queues = EMAIL_NOTIFICATION_TO_TAG)
+//    public void emailToTag(ConsumerDto consumerDTO) throws Exception {
+//        try{
+//            System.out.println("");
+//        }
+//        catch (Exception e){
+//            throw new Exception(e);
+//        }
+//    }
 }

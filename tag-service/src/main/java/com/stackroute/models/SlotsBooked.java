@@ -34,7 +34,7 @@ public class SlotsBooked {
     @CreatedDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date bookedDate = new Date();
-    private Boolean slotStatus;
+    private SlotStatus slotStatus;
     @JsonFormat(pattern = "dd-MM-yyyy'T'HH:mm")
     private Date startTime;
     @JsonFormat(pattern = "dd-MM-yyyy'T'HH:mm")

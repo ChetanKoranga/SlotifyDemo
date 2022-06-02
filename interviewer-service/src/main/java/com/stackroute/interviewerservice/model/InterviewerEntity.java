@@ -30,9 +30,5 @@ public class InterviewerEntity{
     private String end_time;
     private String meeting_venue;
     private String meeting_link;
-    private SlotStatus  slot_status;
-
-
-
-
+    private SlotStatus slot_status;
 }
