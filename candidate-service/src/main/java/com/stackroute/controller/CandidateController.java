@@ -4,15 +4,17 @@ import com.stackroute.model.Job;
 import com.stackroute.model.JobApplication;
 import com.stackroute.services.CandidateServices;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequestMapping("/api/v1")
 @RestController
+@RefreshScope
 public class CandidateController {
 
 

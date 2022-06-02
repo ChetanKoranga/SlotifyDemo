@@ -7,6 +7,7 @@ import com.stackroute.model.JobApplication;
 import com.stackroute.repositories.CandidateRepository;
 import com.stackroute.repositories.JobRepositoy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
