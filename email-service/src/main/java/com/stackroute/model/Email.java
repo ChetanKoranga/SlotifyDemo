@@ -15,10 +15,11 @@ import java.util.Date;
 public class Email {
 
     String subject;
-    String statusCode;
-    String interviewername;
-    String interviewerEmailId;
+    String interviername;
+    String intervierEmailId;
+    String tagmembername;
     String tagEmailId;
+     String candidatename;
     String candidateEmailId;
     String messageText;
     @JsonFormat(pattern = "HH:mm")

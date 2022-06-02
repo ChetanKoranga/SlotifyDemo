@@ -37,15 +37,16 @@ public class EmailService {
         try {
             //from email
             m.setFrom(from);
-           m.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getInterviewerEmailId()));
+           m.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getIntervierEmailId()));
            m.addRecipient(Message.RecipientType.TO,new InternetAddress(email.getTagEmailId()));
             m.addRecipient(Message.RecipientType.TO,new InternetAddress(email.getCandidateEmailId()));
             m.setSubject("Appointment confirmation");
 
             m.setText("Hi "+ ",\n\n" + "Greeting from slotify, \nYour slot is canceled.\nPlease ensure your availability for the following Schedule-:" +
 
-                    "\nInterviewer Name\t:\t" + email.getInterviewername()+ "\nInterviewer Email\t:\t" + email.getInterviewerEmailId()+ "\nTagMember Email\t:\t" +email.getTagEmailId()+
-                    "\nCanadidate Email\t:\t" + email.getCandidateEmailId()+ "\nInterviewer Date\t:\t" + email.getDate() +
+                    "\nIntervier Name\t:\t" + email.getInterviername()+ "\nIntervier Email\t:\t" + email.getIntervierEmailId()+"\nTagMember Name\t:\t" +email.getTagmembername()+
+                    "\nTagMember Email\t:\t" +email.getTagEmailId()+ "\nCanadidate Name\t:\t" + email.getCandidatename()+
+                    "\nCanadidate Email\t:\t" + email.getCandidateEmailId()+ "\nIntervier Date\t:\t" + email.getDate() +
                     "\nStart Time\t:\t" + email.getStartTime() +
                     "\nEnd Time\t:\t" + email.getEndTime() + "\n\nThanks & Regards\nslotify");
 
