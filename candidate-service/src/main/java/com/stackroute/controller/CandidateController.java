@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/candidateservice")
 @RestController
 public class CandidateController {
 
@@ -19,6 +19,12 @@ public class CandidateController {
 
     @Autowired
     private CandidateServices serv;
+    
+    @GetMapping("/testapigateway")
+    public String testapi ( ) {
+    	return "This is just to check if api gateway (CANDIDATE SERVICE) is redirected to this controller ot not,"
+    			+ " in the next iteration this function can be removed ";
+    }
 
     @PostMapping("/jobpost")//calls the method in service layer to save new data of job postings
     public ResponseEntity<Job> save(@RequestBody Job job) {

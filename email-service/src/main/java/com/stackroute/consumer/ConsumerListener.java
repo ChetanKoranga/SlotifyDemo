@@ -6,6 +6,7 @@ date of creation: 30/05/22
 package com.stackroute.consumer;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

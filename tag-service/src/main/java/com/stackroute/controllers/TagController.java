@@ -17,11 +17,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/tag")
+@RequestMapping("/api/v1/tagservice")
 public class TagController {
 
     @Autowired
     private TagService tagService;
+    
+    
+    @GetMapping("/testapigateway")
+    public String testapi ( ) {
+    	return "This is just to check if api gateway (TAG SERVICE) is redirected to this controller ot not,"
+    			+ " in the next iteration this function can be removed ";
+    }
 
     // Get slots by interviewer emailId
     @GetMapping("/slot/interviewer/{email}")
