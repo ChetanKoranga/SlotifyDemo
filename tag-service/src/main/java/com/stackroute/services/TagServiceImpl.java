@@ -7,8 +7,10 @@ package com.stackroute.services;
 
 import com.stackroute.exceptions.InternalServerException;
 import com.stackroute.exceptions.NotFoundException;
+import com.stackroute.models.SlotStatus;
 import com.stackroute.models.SlotUpdate;
 import com.stackroute.models.SlotsBooked;
+import com.stackroute.publisher.EmailPublisher;
 import com.stackroute.repositories.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,13 @@ public class TagServiceImpl implements TagService {
     @Autowired
     TagRepo tagRepo;
 
+    @Autowired
+    EmailPublisher emailPublisher;
+
     // Service for getting slots by TAG member emailId
     @Override
     public List<SlotsBooked> findByTagEmailId(String tagEmailId) throws NotFoundException {
-            return tagRepo.findByTagEmailId(tagEmailId);
+        return tagRepo.findByTagEmailId(tagEmailId);
     }
 
     // Service for getting slots by Interviewer emailId
@@ -38,9 +43,9 @@ public class TagServiceImpl implements TagService {
     public SlotsBooked save(SlotsBooked data) {
         SlotsBooked res;
         try {
-           res = tagRepo.save(data);
-        }
-        catch (Exception e){
+            emailPublisher.sendBookedSlotDetails(data);
+            res = tagRepo.save(data);
+        } catch (Exception e) {
             throw new InternalServerException("Something bad happened.");
         }
         return res;
@@ -48,14 +53,18 @@ public class TagServiceImpl implements TagService {
 
     // Service for updating a slot
     @Override
-    public SlotsBooked updateSlot(SlotUpdate data)  {
+    public SlotsBooked updateSlot(SlotUpdate data) throws Exception {
         SlotsBooked avail;
+        SlotsBooked res;
+
         if (tagRepo.existsById(data.getSlotId())) {
             avail = tagRepo.findById(data.getSlotId()).get();
             avail.setSlotStatus(data.getSlotStatus());
-            return tagRepo.save(avail);
+            emailPublisher.sendUpdatedSlotDetails(avail);
+            res = tagRepo.save(avail);
+            return res;
         }
-        throw new NotFoundException("No Slot found with the given id="+data.getSlotId());
+        throw new NotFoundException("No Slot found with the given id=" + data.getSlotId());
     }
 }
 

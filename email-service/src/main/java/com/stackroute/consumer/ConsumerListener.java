@@ -5,6 +5,10 @@ date of creation: 30/05/22
 
 package com.stackroute.consumer;
 
+import com.stackroute.config.MessagingConfig;
+import com.stackroute.model.Email;
+import com.stackroute.service.EmailService;
+import org.modelmapper.ModelMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,27 +16,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConsumerListener {
 
+    @RabbitListener(queues = MessagingConfig.EMAIL_NOTIFICATION_QUEUE)
+    public void emailToInterviewer(ConsumerDto consumerDTO) throws Exception {
+        try {
+            ModelMapper modelMapper = new ModelMapper();
+            EmailService emailService = new EmailService();
+              Email email = modelMapper.map(consumerDTO,Email.class);
+            emailService.sendEmail(email);
 
-    public static final String EMAIL_NOTIFICATION_TO_INTERVIEWER = "email_notification_to_interviewer";
-    public static final String EMAIL_NOTIFICATION_TO_TAG = "email_notification_to_tag";
-
-
-    @RabbitListener(queues = EMAIL_NOTIFICATION_TO_INTERVIEWER)
-    public void emailToInterviewer(ConsumerDTO consumerDTO) throws Exception {
-        try{
-            System.out.println("");
-        }
-        catch (Exception e){
-            throw new Exception(e);
-        }
-    }
-
-    @RabbitListener(queues = EMAIL_NOTIFICATION_TO_TAG)
-    public void emailToTag(ConsumerDTO consumerDTO) throws Exception {
-        try{
-            System.out.println("");
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e);
         }
     }

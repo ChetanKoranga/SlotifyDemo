@@ -23,7 +23,7 @@ import java.util.Date;
 public class SlotUpdate {
     @Id
     private String slotId;
-    private Boolean slotStatus;
+    private SlotStatus slotStatus;
     private String meetingVenue;
     private String meetingLink;
 }

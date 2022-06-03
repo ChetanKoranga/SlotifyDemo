@@ -51,6 +51,7 @@ public class TagController {
     @PostMapping("/book-slot")
     public ResponseEntity<?> bookSlot(@RequestBody SlotsBooked slotData) {
         try{
+            System.out.println("========== BOOKING BOOKING ===========");
             SlotsBooked slotsBooked = tagService.save(slotData);
             return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
         }

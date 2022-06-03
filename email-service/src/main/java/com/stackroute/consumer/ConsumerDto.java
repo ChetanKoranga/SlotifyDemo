@@ -1,18 +1,23 @@
-package com.stackroute.model;
+/*
+author: chetan.koranga,
+date of creation: 30/05/22
+*/
+
+package com.stackroute.consumer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
 @ToString
-public class Email {
+public class ConsumerDto {
     private String subject;
     private String interviername;
     private String intervierEmailId;
@@ -21,10 +26,7 @@ public class Email {
     private String candidatename;
     private String candidateEmailId;
     private String messageText;
-    @JsonFormat(pattern = "HH:mm")
     private Date startTime;
-    @JsonFormat(pattern = "HH:mm")
     private Date endTime;
-    @JsonFormat(pattern = "yyyy:MM:dd")
     private Date date;
 }
