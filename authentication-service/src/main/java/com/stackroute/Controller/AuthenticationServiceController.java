@@ -30,7 +30,7 @@ import com.stackroute.Service.AuthenticationServiceInterfaceImpl;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/authenticationservice")
 public class AuthenticationServiceController extends Exception{
 
 	/*
@@ -61,8 +61,21 @@ public class AuthenticationServiceController extends Exception{
 
 	/*
 	 * @Autowired JwtUserDetailsService JwtUserDetailsService;
+	 * 
+	 * 
 	 */	
 		
+	
+	 @GetMapping("/testapigateway")
+	    public String testapi ( ) {
+	    	return "This is just to check if api gateway (AUTHENTICATION SERVICE) is redirected to this controller";
+	    		 
+	    	
+	    	
+	    }
+	 
+	 
+	 
 	@GetMapping(value = "/getall",produces="application/json")				// getting all values -- swagger 
 	@ApiOperation(value = "Get all users ", notes = "This api will give all the users, if present")
 	public ResponseEntity<Object> findingAll() throws UserNotFoundException {
