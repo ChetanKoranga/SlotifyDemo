@@ -13,15 +13,14 @@ import java.util.Date;
 @Setter
 @ToString
 public class Email {
-
-    String subject;
-    String interviername;
-    String intervierEmailId;
-    String tagmembername;
-    String tagEmailId;
-     String candidatename;
-    String candidateEmailId;
-    String messageText;
+    private String subject;
+    private String interviername;
+    private String intervierEmailId;
+    private String tagmembername;
+    private String tagEmailId;
+    private String candidatename;
+    private String candidateEmailId;
+    private String messageText;
     @JsonFormat(pattern = "HH:mm")
     private Date startTime;
     @JsonFormat(pattern = "HH:mm")

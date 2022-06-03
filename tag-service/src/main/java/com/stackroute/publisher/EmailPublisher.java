@@ -24,7 +24,7 @@ public class EmailPublisher {
         PublisherDto publisherDto = new PublisherDto();
         try {
             System.out.println("Sent to queue:  " + slotsBooked);
-            publisherDto.setSubject("Slot is booked");
+            publisherDto.setSubject("Your slot is booked");
             publisherDto.setInterviername(slotsBooked.getInterviewerName());
             publisherDto.setIntervierEmailId(slotsBooked.getInterviewerEmailId());
             publisherDto.setTagmembername(slotsBooked.getTagMemberName());
@@ -47,7 +47,7 @@ public class EmailPublisher {
         PublisherDto publisherDto = new PublisherDto();
         try {
             System.out.println("Sent to queue:  " + slotsBooked);
-            publisherDto.setSubject("Slot is Updated");
+            publisherDto.setSubject("Your slot is cancelled");
             publisherDto.setInterviername(slotsBooked.getInterviewerName());
             publisherDto.setIntervierEmailId(slotsBooked.getInterviewerEmailId());
             publisherDto.setTagmembername(slotsBooked.getTagMemberName());

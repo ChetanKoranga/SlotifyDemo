@@ -53,21 +53,18 @@ public class TagServiceImpl implements TagService {
 
     // Service for updating a slot
     @Override
-    public SlotsBooked updateSlot(SlotUpdate data) {
+    public SlotsBooked updateSlot(SlotUpdate data) throws Exception {
         SlotsBooked avail;
-        SlotsBooked res = null;
-        try {
-            if (tagRepo.existsById(data.getSlotId())) {
-                avail = tagRepo.findById(data.getSlotId()).get();
-                avail.setSlotStatus(data.getSlotStatus());
-                emailPublisher.sendUpdatedSlotDetails(avail);
-                res = tagRepo.save(avail);
-            }
+        SlotsBooked res;
+
+        if (tagRepo.existsById(data.getSlotId())) {
+            avail = tagRepo.findById(data.getSlotId()).get();
+            avail.setSlotStatus(data.getSlotStatus());
+            emailPublisher.sendUpdatedSlotDetails(avail);
+            res = tagRepo.save(avail);
+            return res;
         }
-       catch (Exception e){
-           throw new NotFoundException("No Slot found with the given id=" + data.getSlotId());
-       }
-        return res;
+        throw new NotFoundException("No Slot found with the given id=" + data.getSlotId());
     }
 }
 
