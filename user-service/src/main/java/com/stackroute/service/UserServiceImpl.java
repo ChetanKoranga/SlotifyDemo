@@ -139,6 +139,7 @@ public class UserServiceImpl implements UserService {
         if (candidateDto.getPassword()!="" && candidateDto.getPassword()!=null){
             producerDTO.setPassword(new BCryptPasswordEncoder().encode(candidateDto.getPassword()));
         }
+        producerDTO.setUserRole("CANDIDATE");
         userPublisher.saveUserDetails(producerDTO);
         editCandidte.setEmailId(candidate.getEmailId());
         editCandidte.setFirstName(candidate.getFirstName());

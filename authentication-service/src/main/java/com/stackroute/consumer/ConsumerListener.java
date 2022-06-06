@@ -53,6 +53,7 @@ public class ConsumerListener {
                 System.out.println("=====UPDATING TRIGGERED=====");
                 int userId = email.get(0).getUserId();
                 System.out.println("**** It is a user ID ****" + userId);
+                authenticationServiceDto.setUserId(userId);
                 authenticationService.UpdatingUser(authenticationServiceDto, userId);
             }
 

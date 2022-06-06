@@ -31,9 +31,8 @@ public class AuthenticationServiceInterfaceImpl implements AuthenticationService
 
 
     public ResponseEntity<Object> NewUser(AuthenticationServiceModel asmobj) {
-
         AuthenticationServiceDto asdobj = new AuthenticationServiceDto();
-
+        System.out.println("Body data:    " + asmobj.toString());
         asdobj.setPassword(asmobj.getPassword());
         asdobj.setUserName(asmobj.getUserName());
         asdobj.setUserRole(asmobj.getUserRole());
@@ -53,15 +52,14 @@ public class AuthenticationServiceInterfaceImpl implements AuthenticationService
 
 
     public ResponseEntity<Object> UpdatingUser(AuthenticationServiceDto asdobj, int userId) throws UserNotFoundException {
+        System.out.println("SERVICE :::" + userId + asdobj.toString().toString());
         if (authenticationServiceRepositoryObj.existsById(userId)) {
-            System.out.println("SERVICE :::" + userId + asdobj.toString());
             AuthenticationServiceDto adb = new AuthenticationServiceDto();
             adb.setUserId(asdobj.getUserId());
             adb.setPassword(asdobj.getPassword());
             adb.setUserName(asdobj.getUserName());
             adb.setUserRole(asdobj.getUserRole());
             adb.setEmail(asdobj.getEmail());
-
             return new ResponseEntity<Object>(authenticationServiceRepositoryObj.save(adb), HttpStatus.ACCEPTED);
         } else {
             throw new UserNotFoundException("Cannot update any user by the given id : " + userId);
