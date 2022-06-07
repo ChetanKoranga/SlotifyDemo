@@ -22,13 +22,7 @@ public class TagController {
 
     @Autowired
     private TagService tagService;
-    
-    
-    @GetMapping("/testapigateway")
-    public String testapi ( ) {
-    	return "This is just to check if api gateway (TAG SERVICE) is redirected to this controller ot not,"
-    			+ " in the next iteration this function can be removed ";
-    }
+
 
     // Get slots by interviewer emailId
     @GetMapping("/slot/interviewer/{email}")
@@ -51,6 +45,7 @@ public class TagController {
     @PostMapping("/book-slot")
     public ResponseEntity<?> bookSlot(@RequestBody SlotsBooked slotData) {
         try{
+            System.out.println("========== BOOKING BOOKING ==========="+ slotData);
             SlotsBooked slotsBooked = tagService.save(slotData);
             return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
         }

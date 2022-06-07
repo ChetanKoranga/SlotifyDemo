@@ -89,7 +89,8 @@ public class AuthenticationServiceController extends Exception{
 	
 	@PostMapping(value = "/new",produces="application/json")				// adding new user -- swagger
 	@ApiOperation(value = "Saving details of new user ", notes = "This api willsave the new user data")
-	public ResponseEntity<Object> newUser(@RequestBody AuthenticationServiceModel asmobj) {
+	public ResponseEntity<?> newUser(@RequestBody AuthenticationServiceModel asmobj) {
+		System.out.println("Body data:    "+asmobj.toString());
 		return authenticationServiceInterfaceImplobj.NewUser(asmobj);
 	}
 	

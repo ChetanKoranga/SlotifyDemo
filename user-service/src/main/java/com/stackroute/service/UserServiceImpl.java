@@ -1,5 +1,6 @@
 package com.stackroute.service;
 
+import com.stackroute.DTOs.CandidateDto;
 import com.stackroute.DTOs.InterviewerDto;
 import com.stackroute.DTOs.TAGMemeberDto;
 import com.stackroute.Models.Candidate;
@@ -82,7 +83,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Candidate registerCandidate(Candidate candidate) {
+    public Candidate registerCandidate(CandidateDto candidateDto) throws Exception {
+        Candidate candidate = modelMapper.map(candidateDto, Candidate.class);
+        ProducerDto producerDTO = new ProducerDto();
+        producerDTO.setEmail(candidateDto.getEmailId());
+        producerDTO.setUserName(candidateDto.getFirstName() + " " + candidateDto.getLastName());
+        producerDTO.setUserRole("CANDIDATE");
+        producerDTO.setPassword(new BCryptPasswordEncoder().encode(candidateDto.getPassword()));
+        userPublisher.saveUserDetails(producerDTO);
         return candidateRepo.save(candidate);
     }
 
@@ -106,6 +114,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
     public TAGMemeber updateTAGMember(TAGMemeber tagMemeber) {
 
         Optional<TAGMemeber> Slotify1 = this.tagMemeberRepo.findById(tagMemeber.getEmailId());
@@ -118,10 +127,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Candidate updateCandidate(Candidate candidate) {
+    public Candidate updateCandidate(CandidateDto candidateDto) throws Exception {
+        ProducerDto producerDTO = new ProducerDto();
+        Candidate candidate = modelMapper.map(candidateDto, Candidate.class);
 
         Optional<Candidate> Slotify2 = this.candidateRepo.findById(candidate.getEmailId());
         Candidate editCandidte = Slotify2.get();
+
+        producerDTO.setEmail(candidateDto.getEmailId());
+        producerDTO.setUserName(candidateDto.getFirstName() + " " + candidateDto.getLastName());
+        if (candidateDto.getPassword()!="" && candidateDto.getPassword()!=null){
+            producerDTO.setPassword(new BCryptPasswordEncoder().encode(candidateDto.getPassword()));
+        }
+        producerDTO.setUserRole("CANDIDATE");
+        userPublisher.saveUserDetails(producerDTO);
         editCandidte.setEmailId(candidate.getEmailId());
         editCandidte.setFirstName(candidate.getFirstName());
         editCandidte.setLastName(candidate.getLastName());

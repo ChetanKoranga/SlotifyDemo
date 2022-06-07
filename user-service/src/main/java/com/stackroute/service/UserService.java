@@ -1,5 +1,6 @@
 package com.stackroute.service;
 
+import com.stackroute.DTOs.CandidateDto;
 import com.stackroute.DTOs.InterviewerDto;
 import com.stackroute.DTOs.TAGMemeberDto;
 import com.stackroute.Models.Candidate;
@@ -15,13 +16,13 @@ public interface UserService {
     InterviewerDto registerInterviewer(InterviewerDto interviewer)throws AlreadyExitException;
     TAGMemeberDto registerTAGMember (TAGMemeberDto tagMemeber) throws Exception;
 
-    Candidate registerCandidate(Candidate candidate);
+    Candidate registerCandidate(CandidateDto candidate) throws Exception;
 
     Interviewer updateInterviewer(Interviewer interviewer)throws ResourceNotFoundException;
 
     TAGMemeber updateTAGMember(TAGMemeber tagMemeber);
 
-    Candidate updateCandidate(Candidate candidate);
+    Candidate updateCandidate(CandidateDto candidateDto) throws Exception;
 
   //List<Interviewer> findByTechTrack(String techTrack);
     List<Interviewer> getByTechTrack(String techTrack);

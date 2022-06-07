@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MessagingConfig {
-//    public static final String QUEUE = "user_auth_data";
+    public static final String EMAIL_NOTIFICATION_QUEUE = "email_notification_queue";
+    public static final String QUEUE = EMAIL_NOTIFICATION_QUEUE;
+
 //    public static final String EXCHANGE = "user_auth_exchange";
 //    public static final String ROUTING_KEY = "user_auth_routing_key";
 //

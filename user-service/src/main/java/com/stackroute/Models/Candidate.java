@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document(collection = "candidate_data")
 public class Candidate {
-
     @Id
     private String emailId;
     private String firstName;
@@ -23,6 +22,4 @@ public class Candidate {
     private float expectedCtc;
     private int noticePeriod;
     private Resume resume;
-
-
     }
