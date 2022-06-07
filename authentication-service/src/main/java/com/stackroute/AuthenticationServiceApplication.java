@@ -17,16 +17,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-<<<<<<< HEAD
 @EnableSwagger2
-=======
 @EnableEurekaClient
 
-
-
-@EnableSwagger2
-
->>>>>>> e5536c8ba3c811be81b1982de67ce0c1b93cb5fb
 public class AuthenticationServiceApplication {
 
 	public static void main(String[] args) {

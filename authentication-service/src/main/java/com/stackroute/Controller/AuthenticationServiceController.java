@@ -69,10 +69,7 @@ public class AuthenticationServiceController extends Exception{
 	 @GetMapping("/testapigateway")
 	    public String testapi ( ) {
 	    	return "This is just to check if api gateway (AUTHENTICATION SERVICE) is redirected to this controller";
-	    		 
-	    	
-	    	
-	    }
+	    		 }
 	 
 	 
 	 
