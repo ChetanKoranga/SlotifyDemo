@@ -2,6 +2,8 @@ package com.stackroute.Dto;
 
 import javax.persistence.*;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.sun.istack.NotNull;

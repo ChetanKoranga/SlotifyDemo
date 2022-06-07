@@ -41,6 +41,19 @@ public class AuthenticationServiceInterfaceImpl implements AuthenticationService
         return new ResponseEntity<Object>(authenticationServiceRepositoryObj.save(asdobj), HttpStatus.CREATED);
 
     }
+    
+    public AuthenticationServiceDto addUser(AuthenticationServiceDto asmobj) {
+        AuthenticationServiceDto asdobj = new AuthenticationServiceDto();
+//        System.out.println("Body data:    " + asmobj.toString());
+//        asdobj.setPassword(asmobj.getPassword());
+//        asdobj.setUserName(asmobj.getUserName());
+//        asdobj.setUserRole(asmobj.getUserRole());
+//        asdobj.setEmail(asmobj.getEmail());
+      
+
+        return authenticationServiceRepositoryObj.save(asdobj);
+
+    }
 
     public ResponseEntity<Object> findByUser(int id) throws UserNotFoundException {
         if (authenticationServiceRepositoryObj.existsById(id))

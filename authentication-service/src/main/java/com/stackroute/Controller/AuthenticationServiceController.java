@@ -1,6 +1,7 @@
 package com.stackroute.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -120,12 +121,13 @@ public class AuthenticationServiceController extends Exception{
 		 }	
 	}
 	
+	
 	  @RequestMapping(value = "/user_save", method =RequestMethod.POST)
 	  
 	  @ApiOperation(value = "Saving details of new user ", notes ="This api willsave the new user data")
-	  public void saveUser(@RequestBody AuthenticationServiceDto user) throws Exception {
+	  public ResponseEntity addUser(@RequestBody AuthenticationServiceDto user) throws Exception {
 	  
-	  repository.save(user);
+		  return new ResponseEntity( repository.save(user),HttpStatus.OK );
 	  
 	  }
 	 

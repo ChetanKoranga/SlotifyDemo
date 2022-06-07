@@ -35,7 +35,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackroute.Controller.AuthenticationServiceController;
 import com.stackroute.Dto.AuthenticationServiceDto;
 import com.stackroute.JwtUtils.JwtUtil;
+import com.stackroute.Model.AuthenticationServiceModel;
 import com.stackroute.Repository.AuthenticationServiceRepository;
+import com.stackroute.Service.AuthenticationServiceInterfaceImpl;
 
 
 
@@ -47,6 +49,9 @@ public class TestAuthenticationController {
 
 	@Mock
 	private AuthenticationServiceRepository repository;
+	
+	@Mock
+	AuthenticationServiceInterfaceImpl jwtUserDetailsService;
 
 	@Mock
 	private JwtUtil jwtUtil;
@@ -90,12 +95,12 @@ public class TestAuthenticationController {
 	
 	 @Test
 	    public void givenProductToSaveReturnSaveProduct() throws Exception {
-		 when(repository.save(u1)).thenReturn(u1);
+		 when(jwtUserDetailsService.addUser(u1)).thenReturn(u1);
 	        mockMvc.perform(post("/api/v1/authenticationservice/user_save")
 	                        .contentType(MediaType.APPLICATION_JSON)
 	                        .content(jsonToString(u1)))
 	                .andExpect(status().isCreated()).andDo(MockMvcResultHandlers.print());
-	        verify(repository, times(1)).save(any());
+	        verify(jwtUserDetailsService, times(1)).addUser(any());
 	    }
 
 	
