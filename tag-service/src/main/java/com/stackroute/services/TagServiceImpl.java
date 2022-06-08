@@ -43,6 +43,7 @@ public class TagServiceImpl implements TagService {
     public SlotsBooked save(SlotsBooked data) {
         SlotsBooked res;
         try {
+            System.out.println("DATA==== " + data);
             emailPublisher.sendBookedSlotDetails(data);
             res = tagRepo.save(data);
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.stackroute.controllers;
 
+import com.stackroute.DTOs.CandidateDto;
 import com.stackroute.DTOs.InterviewerDto;
 import com.stackroute.DTOs.TAGMemeberDto;
 import com.stackroute.Models.Candidate;
@@ -50,8 +51,8 @@ public class userController {
 
       }*/
      @PostMapping("/register-Candidate")
-     public ResponseEntity<Candidate> registerCandidate (@RequestBody Candidate candidate){
-         userService.registerCandidate(candidate);
+     public ResponseEntity<Candidate> registerCandidate (@RequestBody CandidateDto candidateDto) throws Exception {
+         userService.registerCandidate(candidateDto);
          return ResponseEntity.status(HttpStatus.CREATED).build();
       }
 
@@ -73,9 +74,9 @@ public class userController {
     }
 
     @PutMapping("/updatecandidate/{emailId}")
-    public ResponseEntity<Candidate> updatecandidatedetails(@PathVariable String emailId, @RequestBody Candidate candidate) {
-        candidate.setEmailId(emailId);
-        return ResponseEntity.ok().body(this.userService.updateCandidate(candidate));
+    public ResponseEntity<Candidate> updatecandidatedetails(@PathVariable String emailId, @RequestBody CandidateDto candidateDto) throws Exception {
+        candidateDto.setEmailId(emailId);
+        return ResponseEntity.ok().body(this.userService.updateCandidate(candidateDto));
     }
     //interviewers based on techtrack
 

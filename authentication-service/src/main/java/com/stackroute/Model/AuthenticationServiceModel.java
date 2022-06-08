@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@ToString
 public class AuthenticationServiceModel {
 
 	private int userId;
@@ -18,6 +19,23 @@ public class AuthenticationServiceModel {
 	private String userRole;
 	private String email;
 
+	 
+	@Override
+	public String toString() {
+		return "AuthenticationServiceModel [userId=" + userId + ", userName=" + userName + ", password=" + password
+				+ ", userRole=" + userRole + ", email=" + email + "]";
+	}
+	public AuthenticationServiceModel() {
+		super();
+	}
+	public AuthenticationServiceModel(int userId, String userName, String password, String userRole, String email) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.password = password;
+		this.userRole = userRole;
+		this.email = email;
+	}
 	public String getUserName() {
 		return userName;
 	}
