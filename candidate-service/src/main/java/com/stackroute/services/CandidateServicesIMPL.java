@@ -26,10 +26,10 @@ public class CandidateServicesIMPL implements CandidateServices {
 
     @Override  //returns list of all job posted
     public List<Job> findAll() {
-           List<Job> job = jobrepo.findAll();
-          if ((job.isEmpty())){
-              throw new NoSuchDataExistsException("No jobs Posted Yet");
-          }else
+//           List<Job> job = jobrepo.findAll();
+//          if ((job.isEmpty())){
+//              throw new NoSuchDataExistsException("No jobs Posted Yet");
+//          }else
 
               return jobrepo.findAll();
     }
@@ -61,11 +61,7 @@ public class CandidateServicesIMPL implements CandidateServices {
 
 
            // Job jobUpdate = avail.get();
-            avail.setJobTitle(job.getJobTitle());
-            avail.setJob_post_status(job.getJob_post_status());
-            avail.setTag_member_name(job.getTag_member_name());
-            avail.setTag_team_name(job.getTag_team_name());
-            avail.setTagMemberEmailId(job.getTagMemberEmailId());
+
             jobrepo.save(avail);
             return avail;
         } else {
@@ -80,10 +76,7 @@ public class CandidateServicesIMPL implements CandidateServices {
               JobApplication appavail = AppRepo.findById(jobApplication.getApplicationId()).get();
 
 
-            appavail.setGd(jobApplication.getGd());
-            appavail.setShortlisted(jobApplication.getShortlisted());
-            appavail.setInterview(jobApplication.getInterview());
-            appavail.setStatus(jobApplication.getStatus());
+
             AppRepo.save(appavail);
             return appavail;
         } else {

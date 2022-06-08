@@ -21,12 +21,7 @@ public class CandidateController {
 
     @Autowired
     private CandidateServices serv;
-    
-    @GetMapping("/testapigateway")
-    public String testapi ( ) {
-    	return "This is just to check if api gateway (CANDIDATE SERVICE) is redirected to this controller ot not,"
-    			+ " in the next iteration this function can be removed ";
-    }
+
 
     @PostMapping("/jobpost")//calls the method in service layer to save new data of job postings
     public ResponseEntity<Job> save(@RequestBody Job job) {
@@ -35,8 +30,8 @@ public class CandidateController {
     }
 
 
-    @PatchMapping ("/Updatejob")//calls the method in service layer to update existing data
-    public ResponseEntity < ? > updatejobpostiong(@RequestBody Job job) {
+    @PutMapping ("/Updatejob")//calls the method in service layer to update existing data
+    public ResponseEntity <?> updatejobpostiong(@RequestBody Job job) {
         serv.UpdateJob(job);
         return new ResponseEntity<>("Updated Successfully ", HttpStatus.OK);
     }
@@ -47,7 +42,7 @@ public class CandidateController {
     }
 
 
-    @PatchMapping("/Updatejobapp")//calls the service layer method to update the existing job application
+    @PutMapping("/Updatejobapp")//calls the service layer method to update the existing job application
     public ResponseEntity<?> updatejobapp(@RequestBody JobApplication jobApplication) {
                 serv.UpdateJobApplication(jobApplication);
         return new ResponseEntity<>("Job Application updated successfully", HttpStatus.OK);
