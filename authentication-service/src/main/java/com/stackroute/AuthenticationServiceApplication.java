@@ -19,10 +19,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @SpringBootApplication
+<<<<<<< HEAD
+@EnableSwagger2
+=======
+>>>>>>> 85b939e8835882370481ffd2a29f2edaa32ae196
 @EnableEurekaClient
 @EnableSwagger2
 public class AuthenticationServiceApplication {
 
+<<<<<<< HEAD
+public class AuthenticationServiceApplication {
+=======
     public static void main(String[] args) {
         SpringApplication.run(AuthenticationServiceApplication.class, args);
     }
@@ -62,6 +69,7 @@ public class AuthenticationServiceApplication {
      * SecurityReference("JWT",(springfox.documentation.service.AuthorizationScope[]
      * ) authorizationScopes)); }
      */
+>>>>>>> 85b939e8835882370481ffd2a29f2edaa32ae196
 
 }
 

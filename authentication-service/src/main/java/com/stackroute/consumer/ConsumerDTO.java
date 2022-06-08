@@ -19,4 +19,46 @@ public class ConsumerDTO {
     private String password;
     private String userRole;
     private String email;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getUserRole() {
+		return userRole;
+	}
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public ConsumerDTO(String userName, String password, String userRole, String email) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.userRole = userRole;
+		this.email = email;
+	}
+	@Override
+	public String toString() {
+		return "ConsumerDTO [userName=" + userName + ", password=" + password + ", userRole=" + userRole + ", email="
+				+ email + "]";
+	}
+	public ConsumerDTO() {
+		super();
+	}
+
+    
+    
 }
