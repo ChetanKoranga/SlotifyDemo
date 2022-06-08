@@ -38,6 +38,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class TagControllerTest {
@@ -73,28 +74,40 @@ public class TagControllerTest {
     @Test
     void testBookSlot() throws Exception {
         when(tagService.save(any())).thenReturn(slotsBooked);
-        mockMvc.perform(post("/api/v1/tagservice/book-slot").contentType(MediaType.APPLICATION_JSON).content(jsonToString(slotsBooked)));
+        mockMvc.perform(post("/api/v1/tagservice/book-slot")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonToString(slotsBooked)))
+                .andExpect(status().isOk());;
         verify(tagService, times(1)).save(any());
     }
 
     @Test
     void testUpdateSlot() throws Exception {
         when(tagService.updateSlot(any())).thenReturn(slotsBooked);
-        mockMvc.perform(patch("/api/v1/tagservice/update-slot").contentType(MediaType.APPLICATION_JSON).content(jsonToString(slotsBooked)));
+        mockMvc.perform(patch("/api/v1/tagservice/update-slot")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonToString(slotsBooked)))
+                .andExpect(status().isOk());;
         verify(tagService, times(1)).updateSlot(any());
     }
 
     @Test
     void slotByTag() throws Exception {
         when(tagService.findByTagEmailId(any())).thenReturn(slotsList);
-        mockMvc.perform(get("/api/v1/tagservice/slot/tag/" + email).contentType(MediaType.APPLICATION_JSON).content(jsonToString(slotsBooked)));
+        mockMvc.perform(get("/api/v1/tagservice/slot/tag/" + email)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonToString(slotsBooked)))
+                .andExpect(status().isOk());
         verify(tagService, times(1)).findByTagEmailId(any());
     }
 
     @Test
     void slotByinterviewer() throws Exception {
         when(tagService.findByInterviewerEmailId(any())).thenReturn(slotsList);
-        mockMvc.perform(get("/api/v1/tagservice/slot/interviewer/" + email).contentType(MediaType.APPLICATION_JSON).content(jsonToString(slotsBooked)));
+        mockMvc.perform(get("/api/v1/tagservice/slot/interviewer/" + email)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonToString(slotsBooked)))
+                .andExpect(status().isOk());;
         verify(tagService, times(1)).findByInterviewerEmailId(any());
     }
 

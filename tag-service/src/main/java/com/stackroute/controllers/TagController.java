@@ -33,39 +33,21 @@ public class TagController {
     // Get slots by TAG member emailId
     @GetMapping("/slot/tag/{email}")
     public ResponseEntity<?> slotByTag(@PathVariable("email") String email) {
-        try {
-            return ResponseEntity.ok(new Response("SUCCESS", tagService.findByTagEmailId(email), ""));
-        } catch (InternalServerException e) {
-            throw new InternalServerException("Something bad happened");
-        }
-
+        return ResponseEntity.ok(new Response("SUCCESS", tagService.findByTagEmailId(email), ""));
     }
 
     // Book Slot
     @PostMapping("/book-slot")
-    public ResponseEntity<?> bookSlot(@RequestBody SlotsBooked slotData) {
-        try{
-            System.out.println("========== BOOKING BOOKING ==========="+ slotData);
-            SlotsBooked slotsBooked = tagService.save(slotData);
-            return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
-        }
-        catch (InternalServerException e) {
-            throw new InternalServerException("Something bad happened");
-        }
-
+    public ResponseEntity<?> bookSlot(@RequestBody SlotsBooked slotData) throws Exception {
+        System.out.println("========== BOOKING BOOKING ===========" + slotData);
+        SlotsBooked slotsBooked = tagService.save(slotData);
+        return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
     }
 
     // Update booked slot
     @PatchMapping("/update-slot")
     public ResponseEntity<?> updateSlot(@RequestBody SlotUpdate slotData) throws Exception {
-        try {
-            SlotsBooked slotsBooked = tagService.updateSlot(slotData);
-            return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
-        } catch (NotFoundException e) {
-            throw new NotFoundException("Slot not found");
-        }
-        catch (InternalServerException e) {
-            throw new InternalServerException("Something bad happened");
-        }
+        SlotsBooked slotsBooked = tagService.updateSlot(slotData);
+        return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
     }
 }

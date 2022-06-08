@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface TagService {
 
-    List <SlotsBooked> findByTagEmailId(String email) throws NotFoundException;
+    List<SlotsBooked> findByTagEmailId(String email) throws NotFoundException;
 
     List<SlotsBooked> findByInterviewerEmailId(String email);
 
