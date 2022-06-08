@@ -19,10 +19,11 @@ public interface CandidateServices {
 
     JobApplication UpdateJobApplication(JobApplication jobApplication);
 
-    JobApplication save(JobApplication jobApplication);
+    JobApplication saveapp(JobApplication jobApplication);
 
 
 
-//    Optional<JobApplication> findById(String applicationId);
+
+
 
 }
