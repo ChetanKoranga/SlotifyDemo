@@ -43,21 +43,6 @@ public class ConsumerDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public ConsumerDTO(String userName, String password, String userRole, String email) {
-		super();
-		this.userName = userName;
-		this.password = password;
-		this.userRole = userRole;
-		this.email = email;
-	}
-	@Override
-	public String toString() {
-		return "ConsumerDTO [userName=" + userName + ", password=" + password + ", userRole=" + userRole + ", email="
-				+ email + "]";
-	}
-	public ConsumerDTO() {
-		super();
-	}
 
     
     

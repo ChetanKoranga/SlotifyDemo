@@ -80,19 +80,8 @@ public class TestAuthenticationController {
 	  u1 = null;
 	  
 	  }
-	 
+	
 
-//	@Test
-//	public void givenUserToSaveReturnSavedUser() throws Exception {
-//
-//		when(repository.save(u1)).thenReturn(u1);
-//		mockMvc.perform(post("/api/v1/user_save"))
-//
-//				.andDo(MockMvcResultHandlers.print());
-//		verify(repository, times(1)).save(any());
-//	}
-	
-	
 	 @Test
 	    public void givenProductToSaveReturnSaveProduct() throws Exception {
 		 when(jwtUserDetailsService.addUser(u1)).thenReturn(u1);
