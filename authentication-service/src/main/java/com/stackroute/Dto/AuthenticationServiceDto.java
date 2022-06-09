@@ -76,7 +76,7 @@ public class AuthenticationServiceDto {
 		this.email = email;
 	}
 
-	@Override
+/*	@Override
 	public String toString() {
 		return "AuthenticationServiceDto [userId=" + userId + ", userName=" + userName + ", password=" + password
 				+ ", userRole=" + userRole + ", email=" + email + "]";
@@ -89,12 +89,14 @@ public class AuthenticationServiceDto {
 		this.password = password;
 		this.userRole = userRole;
 		this.email = email;
-	}
+	}*/
+/*
 
 	public AuthenticationServiceDto() {
 		super();
 	}
 
+*/
 
 
     /*
