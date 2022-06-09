@@ -81,7 +81,7 @@ public class TestAuthenticationController {
 	  
 	  }
 	
-	
+
 	 @Test
 	    public void givenProductToSaveReturnSaveProduct() throws Exception {
 		 when(jwtUserDetailsService.addUser(u1)).thenReturn(u1);
