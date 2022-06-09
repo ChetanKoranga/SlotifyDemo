@@ -29,6 +29,7 @@ import static com.stackroute.model.Group_Discussion.not_scheduled;
 import static com.stackroute.model.Interview.failed;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -151,9 +152,14 @@ public class CandidateServiceTest {
 
     @Test
     public void givenEmailIdToGetjobapplicationListThenReturnallJobapplication()throws NoSuchDataExistsException {
+      try {
+          when(repo.findByTagMemberEmailId(jobApplication.getTagMemberEmailId())).thenReturn(jobApplicationlist);
 
-        when(repo.findByTagMemberEmailId(jobApplication.getTagMemberEmailId())).thenReturn(jobApplicationlist);
-        assertEquals(jobApplicationlist,serv.findBytagMemberEmailId(jobApplication.getTagMemberEmailId()));
+          assertEquals(jobApplicationlist, serv.findBytagMemberEmailId(jobApplication.getTagMemberEmailId()));
+      }catch (NoSuchDataExistsException e){
+          if(jobApplicationlist.isEmpty())
+          throw new NoSuchDataExistsException("NO job registered to this email  or email doesnt exist");
+      }
 
     }
 

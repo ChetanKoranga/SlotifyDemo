@@ -7,7 +7,11 @@ services:
     network_mode: host
     hostname: localhost
     ports:
-      - 27017:27017
+      - 27018:27017
+
+
+
+
 #  rabbitmq:
 #    image: rabbitmq:3.10-management
 #    container_name: rabbitmq-container
@@ -26,6 +30,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root123
       MYSQL_PASSWORD: root123
+
+
+
+
+
+
+
+
   eureka-service:
     image: eureka-service:1.0
     build: eureka-service/
@@ -52,6 +64,10 @@ services:
      restart: always
      ports:
       - 8087:8087
+     depends_on:
+       - eureka-service
+       - config-service
+
   api-gateway:
     image: api-gateway:1.0
     build: api-gateway/
