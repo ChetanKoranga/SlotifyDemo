@@ -104,6 +104,16 @@ public class CandidateServiceTest {
 
     }
 
+    @Test
+    public void givenUserToUpdateThenShouldReturnUpdatedUSer() throws NoSuchDataExistsException{
+        Optional<JobApplication> JobApplication = null;
+        when(repo.findById(jobApplication.getApplicationId())).thenReturn(JobApplication);
+        jobApplication.setStatus(jobApplication.getStatus());
+        JobApplication Update = serv.UpdateJobApplication(jobApplication);
+        assertEquals(jobApplication, Update);
+    }
+
+
 
 
     @Test
@@ -132,16 +142,16 @@ public class CandidateServiceTest {
 //        assertEquals(repo, update);
 //
 //    }
-//@Test
-//public void whenGivenId_shouldUpdateUser_ifFound() {
-//    JobApplication jobapp = new JobApplication();
-//
-//    given(repo.findById(jobApplication.getApplicationId())).willReturn(Optional.of(jobApplication));
-//    jobapp.setTagMemberEmailId("scv");
-//    jobapp.setApplicationId("2");
-//    verify(repo).save(jobapp);
-//    assertEquals(repo,serv.UpdateJobApplication(jobapp));
-//}
+@Test
+public void whenGivenId_shouldUpdateUser_ifFound() {
+    JobApplication jobApplication = new JobApplication();
+      repo.findById(jobApplication.getApplicationId());
+    given(serv.UpdateJobApplication(any())).willReturn(jobApplication);
+    jobApplication.setTagMemberEmailId("scv");
+    jobApplication.setApplicationId("2");
+    verify(repo).save(jobApplication);
+    assertEquals(repo,serv.UpdateJobApplication(jobApplication));
+}
 
 
 
