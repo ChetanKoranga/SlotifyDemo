@@ -26,7 +26,7 @@ public class InterviewController {
         return interviewservice.createInterview(interviewerEntity);
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<InterviewerEntity> updatingSlot(@RequestBody InterviewerEntity interviewerEntity) throws profileAlreadyExists {
         interviewerEntity.setSlot_id(interviewerEntity.getSlot_id());
         return ResponseEntity.ok().body(this.interviewservice.updateInterview(interviewerEntity));
@@ -43,10 +43,5 @@ public class InterviewController {
         this.interviewservice.deleteById(slot_id);
         return HttpStatus.OK;
     }
-@PutMapping("/{slot_id}")
-    public ResponseEntity<InterviewerEntity> updateSlotTimeings(@RequestBody InterviewerEntity interviewerEntity,@PathVariable String slot_id) throws profileAlreadyExists {
-        interviewerEntity.setSlot_id(slot_id);
-        return ResponseEntity.ok().body(this.interviewservice.updateSlot(interviewerEntity));
 
-    }
 }
