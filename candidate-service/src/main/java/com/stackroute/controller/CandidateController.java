@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/candidateservice")
+@RequestMapping("/api/v1")
 @RestController
 @RefreshScope
 public class CandidateController {
