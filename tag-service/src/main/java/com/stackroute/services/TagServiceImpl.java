@@ -26,10 +26,11 @@ public class TagServiceImpl implements TagService {
     @Autowired
     EmailPublisher emailPublisher;
 
+
     // Service for getting slots by TAG member emailId
     @Override
-    public List<SlotsBooked> findByTagEmailId(String tagEmailId) throws NotFoundException {
-        return tagRepo.findByTagEmailId(tagEmailId);
+    public List<SlotsBooked> findByTagEmailId(String tagEmailId) {
+            return tagRepo.findByTagEmailId(tagEmailId);
     }
 
     // Service for getting slots by Interviewer emailId
@@ -40,30 +41,21 @@ public class TagServiceImpl implements TagService {
 
     // Service for saving slot
     @Override
-    public SlotsBooked save(SlotsBooked data) {
-        SlotsBooked res;
-        try {
-            System.out.println("DATA==== " + data);
+    public SlotsBooked save(SlotsBooked data) throws Exception {
             emailPublisher.sendBookedSlotDetails(data);
-            res = tagRepo.save(data);
-        } catch (Exception e) {
-            throw new InternalServerException("Something bad happened.");
-        }
-        return res;
+            return tagRepo.save(data);
     }
 
     // Service for updating a slot
     @Override
     public SlotsBooked updateSlot(SlotUpdate data) throws Exception {
         SlotsBooked avail;
-        SlotsBooked res;
-
+//        System.out.println(tagRepo.findById(data.getSlotId()).toString());
         if (tagRepo.existsById(data.getSlotId())) {
             avail = tagRepo.findById(data.getSlotId()).get();
             avail.setSlotStatus(data.getSlotStatus());
             emailPublisher.sendUpdatedSlotDetails(avail);
-            res = tagRepo.save(avail);
-            return res;
+            return tagRepo.save(avail);
         }
         throw new NotFoundException("No Slot found with the given id=" + data.getSlotId());
     }

@@ -60,10 +60,10 @@ public class CandidateServicesIMPL implements CandidateServices {
         Job avail = jobrepo.findById(job.getJob_posting_id()).get();
 
 
-           // Job jobUpdate = avail.get();
 
-            jobrepo.save(avail);
-            return avail;
+
+            jobrepo.save(job);
+            return job;
         } else {
             throw new NoSuchDataExistsException("Record not found with  JOBId : " + job.getJob_posting_id());
         }
@@ -73,11 +73,10 @@ public class CandidateServicesIMPL implements CandidateServices {
     public JobApplication UpdateJobApplication(JobApplication jobApplication) {
         if (AppRepo.existsById(jobApplication.getApplicationId())){
 
-              JobApplication appavail = AppRepo.findById(jobApplication.getApplicationId()).get();
-              appavail.setStatus(jobApplication.getStatus());
 
-            AppRepo.save(appavail);
-            return appavail;
+
+            AppRepo.save(jobApplication);
+            return jobApplication;
         } else {
             throw new NoSuchDataExistsException("Record not found with  JOBId : " + jobApplication.getApplicationId());
         }
@@ -90,7 +89,7 @@ public class CandidateServicesIMPL implements CandidateServices {
         if (title.isPresent())
 
             throw new DataAlreadyExistsException("Record already present with Application ID :"+ jobApplication.getApplicationId()+new ResponseEntity<>("JobTittle already present",HttpStatus.CONFLICT) );       else {
-           //  jobApplication.setApplicationId(generateUUID());
+
         return AppRepo.save(jobApplication);
 
     }}
@@ -103,10 +102,9 @@ public class CandidateServicesIMPL implements CandidateServices {
         Optional < Job > title =this.jobrepo.findByJobTitle(job.getJobTitle());
         if (title.isPresent()) {
             throw new DataAlreadyExistsException("Job title Already Exists with jobTitle"+" : " + job.getJobTitle());
-           // throw new Resourcefound("Record already present with JOB TITLE :"+ job.getJobTitle()+new ResponseEntity<>("JobTittle already present",HttpStatus.CONFLICT) );
             } else {
 
-          //job.setJob_posting_id(generateUUID());
+
             return jobrepo.save(job);
         }
 

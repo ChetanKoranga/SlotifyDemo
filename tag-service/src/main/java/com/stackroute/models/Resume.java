@@ -6,12 +6,10 @@ date of creation: 18/05/22
 package com.stackroute.models;
 
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 public class Resume {
     private String fileName;

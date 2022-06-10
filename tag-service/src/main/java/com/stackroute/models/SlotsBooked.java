@@ -32,13 +32,13 @@ public class SlotsBooked {
     private String candidateId;
     private String candidateName;
     private String candidateEmailId;
+    private SlotStatus slotStatus;
     @CreatedDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date bookedDate = new Date();
-    private SlotStatus slotStatus;
-//    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date startTime;
-//    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date endTime;
     private Resume resume;
     private String notes;

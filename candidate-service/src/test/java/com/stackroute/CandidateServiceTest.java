@@ -7,17 +7,18 @@ import com.stackroute.model.*;
 import com.stackroute.repositories.CandidateRepository;
 import com.stackroute.repositories.JobRepositoy;
 import com.stackroute.services.CandidateServicesIMPL;
-import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Update;
+
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -25,15 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.stackroute.model.Group_Discussion.not_scheduled;
-import static com.stackroute.model.Interview.failed;
+
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static org.assertj.core.api.Assertions.catchThrowable;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
-import static org.mockito.BDDMockito.given;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,6 +43,8 @@ public class CandidateServiceTest {
 
     @Autowired
     MockMvc mockMvc;
+
+
 
     private JobApplication jobApplication;
     private Job job;
@@ -105,16 +108,23 @@ public class CandidateServiceTest {
     }
 
     @Test
-    public void givenUserToUpdateThenShouldReturnUpdatedUSer() throws NoSuchDataExistsException{
-        Optional<JobApplication> JobApplication = null;
-        when(repo.findById(jobApplication.getApplicationId())).thenReturn(JobApplication);
-        jobApplication.setStatus(jobApplication.getStatus());
-        JobApplication Update = serv.UpdateJobApplication(jobApplication);
-        assertEquals(jobApplication, Update);
+    void testUpdateJobApplicationt() throws Exception {
+        when(repo.save(jobApplication)).thenReturn(jobApplication);
+        when(repo.existsById(jobApplication.getApplicationId())).thenReturn(true);
+      //  when(repo.findById(jobApplication.getApplicationId())).thenReturn(Optional.of(jobApplication)).thenThrow(NoSuchDataExistsException.class);
+       //doThrow(new NoSuchDataExistsException(("No Slot found with the given id=" + jobApplication.getApplicationId()))).when(repo).findById(jobApplication.getApplicationId());
+        JobApplication savedSlot = serv.UpdateJobApplication(jobApplication);
+        assertThat(savedSlot.getCandidate_emailId()).isNotNull();
     }
-
-
-
+    @Test
+    void testUpdateJOBPosted() throws Exception {
+        when(jobrepo.save(job)).thenReturn(job);
+        when(jobrepo.existsById(job.getJob_posting_id())).thenReturn(true);
+        when(jobrepo.findById(job.getJob_posting_id())).thenReturn(Optional.of(job)).thenThrow(NoSuchDataExistsException.class);
+//        doThrow(new NotFoundException(("No Slot found with the given id=" + slotsBooked.getSlotId()))).when(tagRepo).findById(slotUpdate.getSlotId());
+        Job savedSlot = serv.UpdateJob(job);
+        assertThat(savedSlot.getJob_posting_id()).isNotNull();
+    }
 
     @Test
     public void testServicefindall() throws NoSuchDataExistsException {
@@ -125,33 +135,8 @@ public class CandidateServiceTest {
         verify(jobrepo, times(1)).findAll();
 
     }
-//    @Test
-//    public void testServicefindall(){
-//        when(interviewerRepository.findAll()).thenReturn(interviewerSlotBookList);
-//        assertEquals(interviewerSlotBookList,interviewerService.findall());
-//        verify(interviewerRepository,times(1)).findAll();
+//
 
-//    @Test
-//  public void givenUpdateThenShouldReturnUpdateJobApplication() {
-//        when(serv.UpdateJobApplication(any())).thenReturn(jobApplication);
-//       //jobApplication.getApplicationId();
-//        //JobApplication jobb= repo.findById(jobApplication.getApplicationId()).get();
-//
-//        JobApplication update = serv.UpdateJobApplication(jobApplication);
-//       // assertEquals(jobApplication,repo.save(jobApplication));
-//        assertEquals(repo, update);
-//
-//    }
-@Test
-public void whenGivenId_shouldUpdateUser_ifFound() {
-    JobApplication jobApplication = new JobApplication();
-      repo.findById(jobApplication.getApplicationId());
-    given(serv.UpdateJobApplication(any())).willReturn(jobApplication);
-    jobApplication.setTagMemberEmailId("scv");
-    jobApplication.setApplicationId("2");
-    verify(repo).save(jobApplication);
-    assertEquals(repo,serv.UpdateJobApplication(jobApplication));
-}
 
 
 
