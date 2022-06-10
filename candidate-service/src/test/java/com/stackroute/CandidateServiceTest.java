@@ -7,8 +7,7 @@ import com.stackroute.model.*;
 import com.stackroute.repositories.CandidateRepository;
 import com.stackroute.repositories.JobRepositoy;
 import com.stackroute.services.CandidateServicesIMPL;
-import org.assertj.core.api.Assertions;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -112,8 +111,8 @@ public class CandidateServiceTest {
     void testUpdateJobApplicationt() throws Exception {
         when(repo.save(jobApplication)).thenReturn(jobApplication);
         when(repo.existsById(jobApplication.getApplicationId())).thenReturn(true);
-        when(repo.findById(jobApplication.getApplicationId())).thenReturn(Optional.of(jobApplication)).thenThrow(NoSuchDataExistsException.class);
-//        doThrow(new NotFoundException(("No Slot found with the given id=" + slotsBooked.getSlotId()))).when(tagRepo).findById(slotUpdate.getSlotId());
+      //  when(repo.findById(jobApplication.getApplicationId())).thenReturn(Optional.of(jobApplication)).thenThrow(NoSuchDataExistsException.class);
+       //doThrow(new NoSuchDataExistsException(("No Slot found with the given id=" + jobApplication.getApplicationId()))).when(repo).findById(jobApplication.getApplicationId());
         JobApplication savedSlot = serv.UpdateJobApplication(jobApplication);
         assertThat(savedSlot.getCandidate_emailId()).isNotNull();
     }

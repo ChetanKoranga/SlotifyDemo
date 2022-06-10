@@ -25,7 +25,7 @@ public class CandidateController {
 
     @PostMapping("/jobpost")//calls the method in service layer to save new data of job postings
     public ResponseEntity<Job> save(@RequestBody Job job) {
-              job.setJobTitle(job.getJobTitle());
+
         return ResponseEntity.ok().body(this.serv.save(job));
     }
 
@@ -44,8 +44,8 @@ public class CandidateController {
 
     @PutMapping("/Updatejobapp")//calls the service layer method to update the existing job application
     public ResponseEntity<?> updatejobapp(@RequestBody JobApplication jobApplication) {
-                serv.UpdateJobApplication(jobApplication);
-        return new ResponseEntity<>("Job Application updated successfully", HttpStatus.OK);
+               serv.UpdateJobApplication(jobApplication);
+        return new ResponseEntity<>("Job Application Updated", HttpStatus.OK);
     }
 
     @GetMapping("postdjobs/{tagMemberEmailId}") //calls the method in service layer  to fetch all job posted via. tag member email id
