@@ -74,8 +74,7 @@ public class CandidateServicesIMPL implements CandidateServices {
         if (AppRepo.existsById(jobApplication.getApplicationId())){
 
               JobApplication appavail = AppRepo.findById(jobApplication.getApplicationId()).get();
-
-
+              appavail.setStatus(jobApplication.getStatus());
 
             AppRepo.save(appavail);
             return appavail;

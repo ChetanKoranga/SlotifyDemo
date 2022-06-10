@@ -5,8 +5,6 @@ date of creation: 18/05/22
 
 package com.stackroute.controllers;
 
-import com.stackroute.exceptions.InternalServerException;
-import com.stackroute.exceptions.NotFoundException;
 import com.stackroute.models.SlotUpdate;
 import com.stackroute.services.TagService;
 import com.stackroute.models.SlotsBooked;
@@ -17,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/tagservice")
+@RequestMapping("/api/v1")
 public class TagController {
 
     @Autowired

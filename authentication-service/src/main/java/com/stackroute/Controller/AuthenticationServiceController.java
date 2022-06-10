@@ -31,7 +31,7 @@ import com.stackroute.Service.AuthenticationServiceInterfaceImpl;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/v1/authenticationservice")
+@RequestMapping("/api/v1")
 public class AuthenticationServiceController extends Exception{
 
 	/*

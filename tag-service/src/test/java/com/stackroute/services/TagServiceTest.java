@@ -106,12 +106,6 @@ public class TagServiceTest {
 //
     }
 
-//    @Test
-//    void testUpdateSlotFailed() throws Exception {
-//        doThrow(new NotFoundException("NOT FOUND")).when(tagRepo).existsById(slotUpdate.getSlotId());
-//
-//    }
-
     @Test
     void testFindSlotByTagEmail() throws Exception {
         when(tagRepo.findByTagEmailId(TAG_EMAIL)).thenReturn(slotsList).thenThrow(InternalServerException.class);

@@ -47,8 +47,6 @@ public class TestAuthenticationController {
 
 	private static final byte[] json = null;
 
-	@Mock
-	private AuthenticationServiceRepository repository;
 	
 	@Mock
 	AuthenticationServiceInterfaceImpl jwtUserDetailsService;
@@ -80,26 +78,15 @@ public class TestAuthenticationController {
 	  u1 = null;
 	  
 	  }
-	 
+	
 
-//	@Test
-//	public void givenUserToSaveReturnSavedUser() throws Exception {
-//
-//		when(repository.save(u1)).thenReturn(u1);
-//		mockMvc.perform(post("/api/v1/user_save"))
-//
-//				.andDo(MockMvcResultHandlers.print());
-//		verify(repository, times(1)).save(any());
-//	}
-	
-	
 	 @Test
 	    public void givenProductToSaveReturnSaveProduct() throws Exception {
 		 when(jwtUserDetailsService.addUser(u1)).thenReturn(u1);
 	        mockMvc.perform(post("/api/v1/authenticationservice/user_save")
 	                        .contentType(MediaType.APPLICATION_JSON)
 	                        .content(jsonToString(u1)))
-	                .andExpect(status().isCreated()).andDo(MockMvcResultHandlers.print());
+	                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print());
 	        verify(jwtUserDetailsService, times(1)).addUser(any());
 	    }
 

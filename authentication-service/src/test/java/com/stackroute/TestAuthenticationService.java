@@ -2,11 +2,13 @@ package com.stackroute;
 
 
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,6 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.stackroute.Exceptions.UserNotFoundException;
+import com.stackroute.Service.AuthenticationServiceInterfaceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -32,6 +36,7 @@ import com.stackroute.Dto.AuthenticationServiceDto;
 import com.stackroute.JwtUtils.JwtUtil;
 import com.stackroute.Repository.AuthenticationServiceRepository;
 
+import java.util.Optional;
 
 
 @AutoConfigureMockMvc
@@ -45,7 +50,10 @@ public class TestAuthenticationService extends AuthenticationServiceApplicationT
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 	private MockMvc mockMvc;
+	private AuthenticationServiceDto authdto;
 
+	@Mock
+	AuthenticationServiceInterfaceImpl asimpl;
 	@Before
 	public void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -70,4 +78,24 @@ public class TestAuthenticationService extends AuthenticationServiceApplicationT
 
 	}
 
+
+	@Test
+	public void findingUserById() throws UserNotFoundException {
+		AuthenticationServiceDto user = new AuthenticationServiceDto();
+		user.setEmail("it@gmail.com");
+		user.setPassword("1256");
+		user.setUserRole("tagteam");
+		repository.save(user);
+		verify(repository, times(1)).save(any());
+		int id=user.getUserId();
+		// given
+		given(repository.findById(id)).willReturn(Optional.of(user));
+
+		// when
+
+
+		// then
+//		assertThat(savedEmployee).isNotNull();
+
+	}
 }
