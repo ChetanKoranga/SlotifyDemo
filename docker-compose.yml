@@ -12,13 +12,12 @@ services:
 
 
 
-#  rabbitmq:
-#    image: rabbitmq:3.10-management
-#    container_name: rabbitmq-container
-#    network_mode: host
-#    ports:
-#      - 5672:5672
-#      - 15672:15672
+  rabbitmq:
+    image: rabbitmq:3.10-management
+    container_name: rabbitmq-container
+    ports:
+      - 5672:5672
+      - 15672:15672
   mysql:
     image: mysql:latest
     ports:
