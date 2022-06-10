@@ -1,6 +1,7 @@
 package com.stackroute.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -30,7 +31,7 @@ import com.stackroute.Service.AuthenticationServiceInterfaceImpl;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/v1/authenticationservice")
+@RequestMapping("/api/v1")
 public class AuthenticationServiceController extends Exception{
 
 	/*
@@ -69,10 +70,7 @@ public class AuthenticationServiceController extends Exception{
 	 @GetMapping("/testapigateway")
 	    public String testapi ( ) {
 	    	return "This is just to check if api gateway (AUTHENTICATION SERVICE) is redirected to this controller";
-	    		 
-	    	
-	    	
-	    }
+	    		 }
 	 
 	 
 	 
@@ -92,7 +90,8 @@ public class AuthenticationServiceController extends Exception{
 	
 	@PostMapping(value = "/new",produces="application/json")				// adding new user -- swagger
 	@ApiOperation(value = "Saving details of new user ", notes = "This api willsave the new user data")
-	public ResponseEntity<Object> newUser(@RequestBody AuthenticationServiceModel asmobj) {
+	public ResponseEntity<?> newUser(@RequestBody AuthenticationServiceModel asmobj) {
+		System.out.println("Body data:    "+asmobj.toString());
 		return authenticationServiceInterfaceImplobj.NewUser(asmobj);
 	}
 	
@@ -122,12 +121,13 @@ public class AuthenticationServiceController extends Exception{
 		 }	
 	}
 	
+	
 	  @RequestMapping(value = "/user_save", method =RequestMethod.POST)
 	  
 	  @ApiOperation(value = "Saving details of new user ", notes ="This api willsave the new user data")
-	  public void saveUser(@RequestBody AuthenticationServiceDto user) throws Exception {
+	  public ResponseEntity addUser(@RequestBody AuthenticationServiceDto user) throws Exception {
 	  
-	  repository.save(user);
+		  return new ResponseEntity( repository.save(user),HttpStatus.OK );
 	  
 	  }
 	 

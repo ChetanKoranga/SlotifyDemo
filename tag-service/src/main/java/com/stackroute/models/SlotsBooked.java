@@ -16,9 +16,10 @@ import java.util.Date;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
+@Builder
 @Document(collection = "Slots")
 public class SlotsBooked {
     @Id
@@ -34,13 +35,15 @@ public class SlotsBooked {
     @CreatedDate
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date bookedDate = new Date();
-    private Boolean slotStatus;
-    @JsonFormat(pattern = "dd-MM-yyyy'T'HH:mm")
+    private SlotStatus slotStatus;
+//    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date startTime;
-    @JsonFormat(pattern = "dd-MM-yyyy'T'HH:mm")
+//    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date endTime;
     private Resume resume;
     private String notes;
     private String meetingVenue;
     private String meetingLink;
+
+
 }

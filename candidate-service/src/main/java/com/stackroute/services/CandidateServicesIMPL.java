@@ -7,6 +7,7 @@ import com.stackroute.model.JobApplication;
 import com.stackroute.repositories.CandidateRepository;
 import com.stackroute.repositories.JobRepositoy;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,10 @@ public class CandidateServicesIMPL implements CandidateServices {
 
     @Override  //returns list of all job posted
     public List<Job> findAll() {
-           List<Job> job = jobrepo.findAll();
-          if ((job.isEmpty())){
-              throw new NoSuchDataExistsException("No jobs Posted Yet");
-          }else
+//           List<Job> job = jobrepo.findAll();
+//          if ((job.isEmpty())){
+//              throw new NoSuchDataExistsException("No jobs Posted Yet");
+//          }else
 
               return jobrepo.findAll();
     }
@@ -36,11 +37,7 @@ public class CandidateServicesIMPL implements CandidateServices {
 
 
 
-//    @Override
-//    public Optional<Job> findByJobTitle(String jobTitle) {
-//
-//        return jobrepo.findByJobTitle(jobTitle);
-//    }
+
 
     @Override //method returns list of job Application posted via. tagmember email if none is registered with the email then returns NosuchDataFound exception
     public List<JobApplication> findBytagMemberEmailId(String tagMemberEmailId) {
@@ -64,11 +61,7 @@ public class CandidateServicesIMPL implements CandidateServices {
 
 
            // Job jobUpdate = avail.get();
-            avail.setJobTitle(job.getJobTitle());
-            avail.setJob_post_status(job.getJob_post_status());
-            avail.setTag_member_name(job.getTag_member_name());
-            avail.setTag_team_name(job.getTag_team_name());
-            avail.setTagMemberEmailId(job.getTagMemberEmailId());
+
             jobrepo.save(avail);
             return avail;
         } else {
@@ -81,12 +74,8 @@ public class CandidateServicesIMPL implements CandidateServices {
         if (AppRepo.existsById(jobApplication.getApplicationId())){
 
               JobApplication appavail = AppRepo.findById(jobApplication.getApplicationId()).get();
+              appavail.setStatus(jobApplication.getStatus());
 
-
-            appavail.setGd(jobApplication.getGd());
-            appavail.setShortlisted(jobApplication.getShortlisted());
-            appavail.setInterview(jobApplication.getInterview());
-            appavail.setStatus(jobApplication.getStatus());
             AppRepo.save(appavail);
             return appavail;
         } else {
@@ -95,7 +84,7 @@ public class CandidateServicesIMPL implements CandidateServices {
     }
 
     @Override//method saves new job application and returns DataAlready exception if Application already exist
-    public JobApplication save(JobApplication jobApplication) throws DataAlreadyExistsException{
+    public JobApplication saveapp(JobApplication jobApplication) throws DataAlreadyExistsException{
 
         Optional < JobApplication > title =this.AppRepo.findById(jobApplication.getApplicationId());
         if (title.isPresent())
@@ -106,14 +95,10 @@ public class CandidateServicesIMPL implements CandidateServices {
 
     }}
 
-//    @Override
-//    public Optional<JobApplication> findById(String applicationId) {
-//        return Optional.empty();
-//    }
 
 
     @Override//method saves new job posting and returns DataAlready exception if Job already exist via. jobtitle
-    public Job save(Job job) {
+    public Job save(Job job) throws DataAlreadyExistsException{
 
         Optional < Job > title =this.jobrepo.findByJobTitle(job.getJobTitle());
         if (title.isPresent()) {

@@ -1,5 +1,6 @@
 package com.stackroute.controllers;
 
+import com.stackroute.DTOs.CandidateDto;
 import com.stackroute.DTOs.InterviewerDto;
 import com.stackroute.DTOs.TAGMemeberDto;
 import com.stackroute.Models.Candidate;
@@ -20,7 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/userservice")
+@RequestMapping("/api/v1")
 public class userController {
 
     @Autowired
@@ -55,14 +56,12 @@ public class userController {
 
 
 
-       }*/
-    @PostMapping("/register-Candidate")
-    public ResponseEntity<Candidate> registerCandidate(@RequestBody Candidate candidate) {
-        userService.registerCandidate(candidate);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    // updating interviewer
+      }*/
+     @PostMapping("/register-Candidate")
+     public ResponseEntity<Candidate> registerCandidate (@RequestBody CandidateDto candidateDto) throws Exception {
+         userService.registerCandidate(candidateDto);
+         return ResponseEntity.status(HttpStatus.CREATED).build();
+      }
 
     @PutMapping("/updateinterviewer")
     public ResponseEntity<Interviewer> updateinterviewerdetails(  @RequestBody Interviewer interviewer) throws ResourceNotFoundException {
@@ -80,9 +79,9 @@ public class userController {
     }
 
     @PutMapping("/updatecandidate/{emailId}")
-    public ResponseEntity<Candidate> updatecandidatedetails(@PathVariable String emailId, @RequestBody Candidate candidate) {
-        candidate.setEmailId(emailId);
-        return ResponseEntity.ok().body(this.userService.updateCandidate(candidate));
+    public ResponseEntity<Candidate> updatecandidatedetails(@PathVariable String emailId, @RequestBody CandidateDto candidateDto) throws Exception {
+        candidateDto.setEmailId(emailId);
+        return ResponseEntity.ok().body(this.userService.updateCandidate(candidateDto));
     }
     //interviewers based on techtrack
 

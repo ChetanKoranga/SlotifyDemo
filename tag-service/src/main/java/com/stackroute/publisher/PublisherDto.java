@@ -1,24 +1,30 @@
-/*
-author: chetan.koranga,
-date of creation: 31/05/22
-*/
-
 package com.stackroute.publisher;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.stackroute.models.Resume;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Component
 public class PublisherDto {
-    private String userName;
-    private String password;
-    private String userRole;
-    private String email;
+    String subject;
+    String interviername;
+    String intervierEmailId;
+    String tagmembername;
+    String tagEmailId;
+    String candidatename;
+    String candidateEmailId;
+    String messageText;
+    private Date startTime;
+    private Date endTime;
+    private Date date;
 }
