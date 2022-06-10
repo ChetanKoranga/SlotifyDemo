@@ -4,7 +4,7 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongo-container
-    network_mode: host
+#    network_mode: host
     hostname: localhost
     ports:
       - 27018:27017
@@ -19,17 +19,17 @@ services:
 #    ports:
 #      - 5672:5672
 #      - 15672:15672
-  mysql:
-    image: mysql:latest
-    ports:
-      - 3306:3306
-    container_name: mysql-container
-    network_mode: host
-    hostname: localhost
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_PASSWORD: root123
+#  mysql:
+#    image: mysql:latest
+#    ports:
+#      - 3306:3306
+#    container_name: mysql-container
+#    network_mode: host
+#    hostname: localhost
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root123
+#      MYSQL_PASSWORD: root123
 
 
 
@@ -42,25 +42,30 @@ services:
     image: eureka-service:1.0
     build: eureka-service/
     container_name: eureka-service-container
-    network_mode: host
+#    network_mode: host
     restart: always
     ports:
       - 8761:8761
     depends_on:
       - config-service
+
+
   config-service:
     build: config-service/
-    network_mode: host
+#    network_mode: host
     hostname: localhost
     container_name: config-service-container
     restart: always
     ports:
       - 8888:8888
+    depends_on:
+      - eureka-service
+
 
   candidate-service:
      build: candidate-service
 
-     hostname: localhost
+#     hostname: localhost
      restart: always
      ports:
       - 8087:8087
@@ -72,7 +77,7 @@ services:
     image: api-gateway:1.0
     build: api-gateway/
     container_name: api-gateway-container
-    network_mode: host
+#    network_mode: host
     hostname: localhost
     restart: always
     ports:
@@ -82,54 +87,54 @@ services:
       - config-service
 
 
-  user-service:
-    image: user-service:1.0
-    build: user-service/
-    restart: always
-    network_mode: host
-    container_name: user-service-conatainer
-    ports:
-      - 8090:8090
-    depends_on:
-      - mongodb
-      - eureka-service
-      - config-service
-  authentication-service:
-    image: authentication-service:1.0
-    build: authentication-service/
-    restart: always
-    network_mode: host
-    container_name: authentication-service-container
-    ports:
-      - 8095:8095
-    depends_on:
-      - eureka-service
-      - config-service
+#  user-service:
+#    image: user-service:1.0
+#    build: user-service/
+#    restart: always
+#    network_mode: host
+#    container_name: user-service-conatainer
+#    ports:
+#      - 8090:8090
+#    depends_on:
+#      - mongodb
+#      - eureka-service
+#      - config-service
+#  authentication-service:
+#    image: authentication-service:1.0
+#    build: authentication-service/
+#    restart: always
+#    network_mode: host
+#    container_name: authentication-service-container
+#    ports:
+#      - 8095:8095
+#    depends_on:
+#      - eureka-service
+#      - config-service
 
-  email-service:
-    image: email-service:1.0
-    build: email-service
-    restart: always
-    network_mode: host
-    container_name: email-service-container
-    ports:
-      - 8075:8075
-    depends_on:
-      - eureka-service
-      - config-service
+#  email-service:
+#    image: email-service:1.0
+#    build: email-service
+#    restart: always
+#    network_mode: host
+#    container_name: email-service-container
+#    ports:
+#      - 8075:8075
+#    depends_on:
+#      - eureka-service
+#      - config-service
 
 
-  tag-service:
-    image: tag-service:1.0
-    build: tag-service
-    restart: always
-    network_mode: host
-    container_name: email-service-container
-    ports:
-      - 8070:8070
-    depends_on:
-    - eureka-service
-    - config-service
+#  tag-service:
+#    image: tag-service:1.0
+#    build: tag-service
+#    restart: always
+#    network_mode: host
+#    container_name: email-service-container
+#    ports:
+#      - 8070:8070
+#    depends_on:
+#    - eureka-service
+#    - config-service
 
 
 

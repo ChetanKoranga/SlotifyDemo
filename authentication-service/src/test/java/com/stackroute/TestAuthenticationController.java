@@ -47,8 +47,6 @@ public class TestAuthenticationController {
 
 	private static final byte[] json = null;
 
-	@Mock
-	private AuthenticationServiceRepository repository;
 	
 	@Mock
 	AuthenticationServiceInterfaceImpl jwtUserDetailsService;
@@ -88,7 +86,7 @@ public class TestAuthenticationController {
 	        mockMvc.perform(post("/api/v1/authenticationservice/user_save")
 	                        .contentType(MediaType.APPLICATION_JSON)
 	                        .content(jsonToString(u1)))
-	                .andExpect(status().isCreated()).andDo(MockMvcResultHandlers.print());
+	                .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print());
 	        verify(jwtUserDetailsService, times(1)).addUser(any());
 	    }
 
