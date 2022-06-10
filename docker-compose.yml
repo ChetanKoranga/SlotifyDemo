@@ -186,7 +186,7 @@ services:
     ports:
       - 8095:8095
     depends_on:
-      - mysqlservice
+      - postgresservice
       - eureka-service
       - config-service
     restart: always
@@ -199,10 +199,8 @@ services:
     ports:
       - 8075:8075
     depends_on:
-      - mysqlservice
       - eureka-service
       - config-service
-      - authentication-service
     restart: always
 
   interviewer-service:
