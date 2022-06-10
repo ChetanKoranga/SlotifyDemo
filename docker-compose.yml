@@ -9,9 +9,6 @@ services:
     ports:
       - 27017:27017
 
-
-
-
   rabbitmq:
     image: rabbitmq:3.10-management
     container_name: rabbitmq-container
@@ -56,14 +53,14 @@ services:
 
 
   candidate-service:
-     build: candidate-service
-     hostname: localhost
-     restart: always
-     ports:
-      - 8087:8087
-     depends_on:
-       - eureka-service
-       - config-service
+    build: candidate-service
+    hostname: localhost
+    restart: always
+    ports:
+     - 8087:8087
+    depends_on:
+      - eureka-service
+      - config-service
 
   api-gateway:
     image: api-gateway:1.0
@@ -125,8 +122,8 @@ services:
     ports:
       - 8070:8070
     depends_on:
-    - eureka-service
-    - config-service
+      - eureka-service
+      - config-service
 
 
 
