@@ -40,8 +40,9 @@ public class EmailPublisher {
             template.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ROUTING_KEY, publisherDto);
             System.out.println("DATA sent successfully: " + publisherDto);
             return true;
-        } catch (InternalServerException e) {
-            throw new InternalServerException("Something went bad with the messaging queue. Please try again.");
+        } catch (Exception e) {
+            System.out.println("************************************ ERRORORRRRRRRRRRR************************");
+            throw new InternalServerException("RABBITMQ EXCEPTION: " + e.getMessage());
         }
     }
 
@@ -62,8 +63,8 @@ public class EmailPublisher {
             template.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ROUTING_KEY, publisherDto);
             System.out.println("Updated DATA sent successfully: " + publisherDto);
             return true;
-        } catch (InternalServerException e) {
-            throw new InternalServerException("Something went bad with the messaging queue. Please try again.");
+        } catch (Exception e) {
+            throw new InternalServerException("RABBITMQ EXCEPTION: " + e.getMessage());
         }
     }
 }

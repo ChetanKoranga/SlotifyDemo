@@ -50,7 +50,6 @@ public class TagServiceImpl implements TagService {
     @Override
     public SlotsBooked updateSlot(SlotUpdate data) throws Exception {
         SlotsBooked avail;
-//        System.out.println(tagRepo.findById(data.getSlotId()).toString());
         if (tagRepo.existsById(data.getSlotId())) {
             avail = tagRepo.findById(data.getSlotId()).get();
             avail.setSlotStatus(data.getSlotStatus());

@@ -10,7 +10,6 @@ import com.stackroute.services.TagService;
 import com.stackroute.models.SlotsBooked;
 import com.stackroute.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,7 @@ public class TagController {
     // Get slots by interviewer emailId
     @GetMapping("/slot/interviewer/{email}")
     public ResponseEntity<?> slotByInterviewer(@PathVariable String email) {
-        return new ResponseEntity<>(tagService.findByInterviewerEmailId(email), HttpStatus.OK);
+        return ResponseEntity.ok(new Response("SUCCESS", tagService.findByInterviewerEmailId(email), ""));
     }
 
     // Get slots by TAG member emailId
@@ -39,13 +38,13 @@ public class TagController {
     public ResponseEntity<?> bookSlot(@RequestBody SlotsBooked slotData) throws Exception {
         System.out.println("========== BOOKING BOOKING ===========" + slotData);
         SlotsBooked slotsBooked = tagService.save(slotData);
-        return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
+        return ResponseEntity.ok(new Response("SUCCESS", slotsBooked, "Slot Booked Successfully"));
     }
 
     // Update booked slot
     @PatchMapping("/update-slot")
     public ResponseEntity<?> updateSlot(@RequestBody SlotUpdate slotData) throws Exception {
         SlotsBooked slotsBooked = tagService.updateSlot(slotData);
-        return new ResponseEntity<>(slotsBooked, HttpStatus.OK);
+        return ResponseEntity.ok(new Response("SUCCESS", slotsBooked, "Slot Updated Successfully"));
     }
 }
