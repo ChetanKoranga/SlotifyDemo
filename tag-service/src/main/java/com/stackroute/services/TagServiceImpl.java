@@ -30,13 +30,7 @@ public class TagServiceImpl implements TagService {
     // Service for getting slots by TAG member emailId
     @Override
     public List<SlotsBooked> findByTagEmailId(String tagEmailId) {
-        List<SlotsBooked> slots;
-        try {
-            slots = tagRepo.findByTagEmailId(tagEmailId);
-        } catch (InternalServerException e) {
-            throw new InternalServerException("Something bad happened");
-        }
-        return slots;
+            return tagRepo.findByTagEmailId(tagEmailId);
     }
 
     // Service for getting slots by Interviewer emailId
@@ -47,19 +41,16 @@ public class TagServiceImpl implements TagService {
 
     // Service for saving slot
     @Override
-    public SlotsBooked save(SlotsBooked data) {
-        try {
+    public SlotsBooked save(SlotsBooked data) throws Exception {
             emailPublisher.sendBookedSlotDetails(data);
             return tagRepo.save(data);
-        } catch (Exception e) {
-            throw new InternalServerException("Something went bad");
-        }
     }
 
     // Service for updating a slot
     @Override
     public SlotsBooked updateSlot(SlotUpdate data) throws Exception {
         SlotsBooked avail;
+//        System.out.println(tagRepo.findById(data.getSlotId()).toString());
         if (tagRepo.existsById(data.getSlotId())) {
             avail = tagRepo.findById(data.getSlotId()).get();
             avail.setSlotStatus(data.getSlotStatus());

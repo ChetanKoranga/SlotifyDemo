@@ -16,7 +16,7 @@ public interface TagService {
 
     List<SlotsBooked> findByInterviewerEmailId(String email);
 
-    SlotsBooked save(SlotsBooked data);
+    SlotsBooked save(SlotsBooked data) throws Exception;
 
     SlotsBooked updateSlot(SlotUpdate data) throws Exception;
 

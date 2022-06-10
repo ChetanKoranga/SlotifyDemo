@@ -5,7 +5,9 @@ date of creation: 05/06/22
 
 package com.stackroute.services;
 
+import com.stackroute.Config.MessagingConfig;
 import com.stackroute.exceptions.InternalServerException;
+import com.stackroute.exceptions.NotFoundException;
 import com.stackroute.models.Resume;
 import com.stackroute.models.SlotStatus;
 import com.stackroute.models.SlotUpdate;
@@ -13,10 +15,12 @@ import com.stackroute.models.SlotsBooked;
 import com.stackroute.publisher.EmailPublisher;
 import com.stackroute.publisher.PublisherDto;
 import com.stackroute.repositories.TagRepo;
+import org.assertj.core.api.InstanceOfAssertFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,10 +28,16 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -41,15 +51,14 @@ public class TagServiceTest {
     @Mock
     private TagRepo tagRepo;
     @Mock
-    private EmailPublisher emailPublisher;
+    EmailPublisher emailPublisher;
+
     @InjectMocks
     private TagServiceImpl tagService;
 
     SlotsBooked slotsBooked;
     SlotUpdate slotUpdate;
     Resume resume;
-
-
     List<SlotsBooked> slotsList;
 
 
@@ -70,28 +79,42 @@ public class TagServiceTest {
     // test for booking the new slot
     @Test
     void testBookSlot() throws Exception {
-        when(tagService.save(slotsBooked)).thenReturn(slotsBooked).thenThrow(InternalServerException.class);
+        doReturn(true).when(emailPublisher).sendUpdatedSlotDetails(slotsBooked);
+        when(tagRepo.save(slotsBooked)).thenReturn(slotsBooked);
         when(emailPublisher.sendBookedSlotDetails(slotsBooked)).thenReturn(true);
         SlotsBooked savedSlot = tagService.save(slotsBooked);
         assertThat(savedSlot.getSlotId()).isNotNull();
-
-
     }
+
 
     //  test for updating the already booked slot
     @Test
-    void testUpdateSlot() throws Exception {
-        when(tagRepo.save(slotsBooked)).thenReturn(slotsBooked).thenThrow(InternalServerException.class);
-        when(emailPublisher.sendBookedSlotDetails(slotsBooked)).thenReturn(true);
-//        SlotsBooked savedSlot = tagService.updateSlot(slotUpdate);
-//        assertThat(savedSlot.getSlotId()).isNotNull();
+    void testUpdateSlotSuccess() throws Exception {
+        try {
+            when(tagRepo.save(slotsBooked)).thenReturn(slotsBooked);
+            when(tagRepo.existsById(slotUpdate.getSlotId())).thenReturn(true);
+            when(tagRepo.findById(slotUpdate.getSlotId())).thenReturn(Optional.of(slotsBooked));
+            SlotsBooked savedSlot = tagService.updateSlot(slotUpdate);
+            assertThat(savedSlot.getSlotId()).isNotNull();
+            when(tagRepo.existsById(slotUpdate.getSlotId())).thenThrow(new NotFoundException("THIS IS THE NOT FOUND EXCP"));
+
+        } catch (Exception e) {
+            System.out.println("EXCEPTIONS");
+            assertThrows(NotFoundException.class, () -> tagRepo.existsById(slotUpdate.getSlotId()));
+        }
+
+//
     }
 
+//    @Test
+//    void testUpdateSlotFailed() throws Exception {
+//        doThrow(new NotFoundException("NOT FOUND")).when(tagRepo).existsById(slotUpdate.getSlotId());
+//
+//    }
 
     @Test
     void testFindSlotByTagEmail() throws Exception {
         when(tagRepo.findByTagEmailId(TAG_EMAIL)).thenReturn(slotsList).thenThrow(InternalServerException.class);
-//        System.out.println(slotsList + "\n" + tagService.findByTagEmailId(TAG_EMAIL));
         assertEquals(slotsList, tagService.findByTagEmailId(TAG_EMAIL));
         verify(tagRepo, times(1)).findByTagEmailId(TAG_EMAIL);
     }

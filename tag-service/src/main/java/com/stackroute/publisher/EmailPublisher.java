@@ -10,6 +10,7 @@ import com.stackroute.exceptions.InternalServerException;
 import com.stackroute.models.SlotsBooked;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 
@@ -19,7 +20,7 @@ public class EmailPublisher {
     @Autowired
     RabbitTemplate template;
 
-    PublisherDto publisherDto;
+    PublisherDto publisherDto = new PublisherDto();
 
     public boolean sendBookedSlotDetails(SlotsBooked slotsBooked) throws Exception {
         try {
@@ -38,11 +39,10 @@ public class EmailPublisher {
             System.out.println(publisherDto);
             template.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ROUTING_KEY, publisherDto);
             System.out.println("DATA sent successfully: " + publisherDto);
-
+            return true;
         } catch (InternalServerException e) {
             throw new InternalServerException("Something went bad with the messaging queue. Please try again.");
         }
-        return true;
     }
 
     public boolean sendUpdatedSlotDetails(SlotsBooked slotsBooked) throws Exception {
@@ -61,10 +61,9 @@ public class EmailPublisher {
             publisherDto.setDate(slotsBooked.getBookedDate());
             template.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ROUTING_KEY, publisherDto);
             System.out.println("Updated DATA sent successfully: " + publisherDto);
+            return true;
         } catch (InternalServerException e) {
             throw new InternalServerException("Something went bad with the messaging queue. Please try again.");
         }
-        return true;
     }
-
 }
