@@ -1,24 +1,21 @@
-version: '2'
-
-services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongo-container
+#version: '2'
+#
+#services:
+#  mongodb:
+#    image: mongo:latest
+#    container_name: mongo-container
 #    network_mode: host
-    hostname: localhost
-    ports:
-      - 27018:27017
-
-
-
-
+#    hostname: localhost
+#    ports:
+#      - 27017:27017
+#
 #  rabbitmq:
 #    image: rabbitmq:3.10-management
 #    container_name: rabbitmq-container
-#    network_mode: host
 #    ports:
 #      - 5672:5672
 #      - 15672:15672
+#
 #  mysql:
 #    image: mysql:latest
 #    ports:
@@ -30,63 +27,55 @@ services:
 #    environment:
 #      MYSQL_ROOT_PASSWORD: root123
 #      MYSQL_PASSWORD: root123
-
-
-
-
-
-
-
-
-  eureka-service:
-    image: eureka-service:1.0
-    build: eureka-service/
-    container_name: eureka-service-container
+#
+#  eureka-service:
+#    image: eureka-service
+#    build: eureka-service/
+#    container_name: eureka-service-container
 #    network_mode: host
-    restart: always
-    ports:
-      - 8761:8761
-    depends_on:
-      - config-service
-
-
-  config-service:
-    build: config-service/
+#    restart: always
+#    ports:
+#      - 8761:8761
+#    depends_on:
+#      - config-service
+#
+#
+#  config-service:
+#    build: config-service/
 #    network_mode: host
-    hostname: localhost
-    container_name: config-service-container
-    restart: always
-    ports:
-      - 8888:8888
-    depends_on:
-      - eureka-service
-
-
-  candidate-service:
-     build: candidate-service
-
-#     hostname: localhost
-     restart: always
-     ports:
-      - 8087:8087
-     depends_on:
-       - eureka-service
-       - config-service
-
-  api-gateway:
-    image: api-gateway:1.0
-    build: api-gateway/
-    container_name: api-gateway-container
+#    hostname: localhost
+#    container_name: config-service-container
+#    restart: always
+#    ports:
+#      - 8888:8888
+#    depends_on:
+#      - eureka-service
+#
+#
+#  candidate-service:
+#    build: candidate-service
+#    hostname: localhost
+#    restart: always
+#    ports:
+#     - 8087:8087
+#    depends_on:
+#      - eureka-service
+#      - config-service
+#
+#  api-gateway:
+#    image: api-gateway:1.0
+#    build: api-gateway/
+#    container_name: api-gateway-container
 #    network_mode: host
-    hostname: localhost
-    restart: always
-    ports:
-      - 8081:8081
-    depends_on:
-      - eureka-service
-      - config-service
-
-
+#    hostname: localhost
+#    restart: always
+#    ports:
+#      - 8081:8081
+#    depends_on:
+#      - eureka-service
+#      - config-service
+#
+#
 #  user-service:
 #    image: user-service:1.0
 #    build: user-service/
@@ -110,7 +99,7 @@ services:
 #    depends_on:
 #      - eureka-service
 #      - config-service
-
+#
 #  email-service:
 #    image: email-service:1.0
 #    build: email-service
@@ -122,8 +111,8 @@ services:
 #    depends_on:
 #      - eureka-service
 #      - config-service
-
-
+#
+#
 #  tag-service:
 #    image: tag-service:1.0
 #    build: tag-service
@@ -133,8 +122,143 @@ services:
 #    ports:
 #      - 8070:8070
 #    depends_on:
-#    - eureka-service
-#    - config-service
+#      - eureka-service
+#      - config-service
+#
+#
+
+version: "3.3"
+services:
+  mysqlservice:
+    image: postgres
+    ports:
+      - 5432:5432
+    container_name: postgres-container
+    network_mode: host
+    hostname: localhost
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_USERNAME: root
+      #      MYSQL_PASSWORD: Global@145#
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  mongodbservice:
+    image: mongo:latest
+    container_name: mongo-container
+    network_mode: host
+    hostname: localhost
+    ports:
+      - 27017:27017
+
+  config-service:
+    container_name: config-server-container
+    build: config-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8888:8888
+
+  eureka-service:
+    container_name: eureka-server-container
+    build: eureka-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8761:8761
+
+  api-gateway:
+    container_name: api-gateway-container
+    build: api-gateway/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8080:8080
+
+  authentication-service:
+    container_name: authentication-service-container
+    build: authentication-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8095:8095
+    depends_on:
+      - mysqlservice
+      - eureka-service
+      - config-service
+    restart: always
+
+  email-service:
+    container_name: email-service-container
+    build: email-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8075:8075
+    depends_on:
+      - mysqlservice
+      - eureka-service
+      - config-service
+      - authentication-service
+    restart: always
+
+  interviewer-service:
+    container_name: interviewer-service-container
+    build: interviewer-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8097:8097
+    depends_on:
+      - mongodbservice
+      - eureka-service
+      - config-service
+    restart: always
+
+  tag-service:
+    container_name: tag-service-container
+    build: tag-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8070:8070
+    depends_on:
+      - mongodbservice
+      - eureka-service
+      - config-service
+    restart: always
+
+  user-service:
+    container_name: user-service-container
+    build: user-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8090:8090
+    depends_on:
+      - mongodbservice
+      - eureka-service
+      - config-service
+    restart: always
+
+  candidate-service:
+    build: candidate-service/
+    image: candidate-service
+    restart: always
+    container_name: candidate-service-container
+    network_mode: host
+    hostname: localhost
+    ports:
+      - 8087:8087
+    depends_on:
+      - eureka-service
+      - config-service
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
 
 
 

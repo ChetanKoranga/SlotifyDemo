@@ -34,7 +34,7 @@ public class CandidateControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-//    InterviewerSlotBook interviewerSlotBook1,interviewerSlotBook2;
+
 
     @Mock
     private CandidateServices serv;
@@ -64,16 +64,16 @@ public class CandidateControllerTest {
     @Test
     public void CandidateControllertoSave() throws Exception{
         when(serv.saveapp(any())).thenReturn(jobApplication1);
-        mockMvc.perform(post("/api/v1/candidateservice/jobApp")
+        mockMvc.perform(post("/api/v1/jobApp")
                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonToString(jobApplication1))).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print());
+                       .content(jsonToString(jobApplication1))).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print());
         Mockito.verify(serv,times(1)).saveapp(( any()));
     }
     @Test
 
     public void JOBPostedCandidateController() throws Exception{
         when(serv.save(any())).thenReturn(job);
-        mockMvc.perform(post("/api/v1/candidateservice/jobpost")
+        mockMvc.perform(post("/api/v1/jobpost")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonToString(job))).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print());
         Mockito.verify(serv,times(1)).save(( any()));
@@ -82,7 +82,7 @@ public class CandidateControllerTest {
     @Test
     public void testfindallJObPOSTEDController() throws Exception{
         when(serv.findAll()).thenReturn((List<Job>) jobList);
-        mockMvc.perform(get("/api/v1/candidateservice/findall")
+        mockMvc.perform(get("/api/v1/findall")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonToString(job)))
                 .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print());
@@ -92,7 +92,7 @@ public class CandidateControllerTest {
     @Test
     public void testfindbyEmailInterviewerController() throws Exception,NoSuchDataExistsException{
         lenient().when(serv.findByTagMemberEmailId(job.getTagMemberEmailId())).thenReturn(jobList);
-        mockMvc.perform(get("/api/v1/candidateservice/postdjobs/manish@gmail.com")
+        mockMvc.perform(get("/api/v1/postdjobs/manish@gmail.com")
                         .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonToString(job)))
 
@@ -102,21 +102,21 @@ public class CandidateControllerTest {
     @Test
     public void givenToUpdateThenShouldReturnUpdatedjobbApplication() throws Exception {
         when(serv.UpdateJobApplication(any())).thenReturn(jobApplication1);
-        mockMvc.perform(put("/api/v1/candidateservice/Updatejobapp").contentType(MediaType.APPLICATION_JSON).content(jsonToString(jobApplication1)));
+        mockMvc.perform(put("/api/v1/Updatejobapp").contentType(MediaType.APPLICATION_JSON).content(jsonToString(jobApplication1)));
              //.andExpect(status().isOk()).andDo(MockMvcResultHandlers.print());
         verify(serv, times(1)).UpdateJobApplication(any());
     }
     @Test
     public void givenToUpdateThenShouldReturnUpdatedjobbPosted() throws Exception {
         when(serv.UpdateJob(any())).thenReturn(job);
-        mockMvc.perform(put("/api/v1/candidateservice/Updatejob").contentType(MediaType.APPLICATION_JSON).content(jsonToString(job)));
+        mockMvc.perform(put("/api/v1/Updatejob").contentType(MediaType.APPLICATION_JSON).content(jsonToString(job)));
         //          .andExpect(status().isOk()).andDo(MockMvcResultHandlers.print());
         verify(serv, times(1)).UpdateJob(any());
     }
     @Test
     public void testfindbyEmailJObAPPLICATIOn() throws Exception,NoSuchDataExistsException{
         lenient().when(serv.findBytagMemberEmailId(jobApplication1.getTagMemberEmailId())).thenReturn(jobApplicationList1);
-        mockMvc.perform(get("/api/v1/candidateservice/jobApppostd/manish@gmail.com")
+        mockMvc.perform(get("/api/v1/jobApppostd/manish@gmail.com")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonToString(jobApplication1)))
 
