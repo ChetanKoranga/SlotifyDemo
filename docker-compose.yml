@@ -130,10 +130,10 @@
 version: "3.3"
 services:
   mysqlservice:
-    image: mysql
+    image: postgres
     ports:
-      - 3306:3306
-    container_name: mysql-container
+      - 5432:5432
+    container_name: postgres-container
     network_mode: host
     hostname: localhost
     environment:
