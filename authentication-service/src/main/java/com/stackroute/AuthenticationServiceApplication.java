@@ -3,6 +3,7 @@ package com.stackroute;
 import java.util.Arrays;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -32,6 +33,11 @@ public class AuthenticationServiceApplication {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select() // .paths(PathSelectors.ant("/"))
 				.apis(RequestHandlerSelectors.basePackage("com.stackroute.Controller")).build().apiInfo(apiDetails());
+	}
+
+	@Bean
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
 	}
 
 	public static final String AUTHORIZATION_HEADER = "Authorization";
