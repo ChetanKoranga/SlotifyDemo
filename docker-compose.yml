@@ -183,8 +183,8 @@ services:
       - 8095:8095
     depends_on:
       - mysqlservice
-      - eurekaserver
-      - configserver
+      - eureka-service
+      - config-service
     restart: always
 
   email-service:
@@ -196,9 +196,9 @@ services:
       - 8075:8075
     depends_on:
       - mysqlservice
-      - eurekaserver
-      - configserver
-      - authenticationservice
+      - eureka-service
+      - config-service
+      - authentication-service
     restart: always
 
   interviewer-service:
@@ -210,8 +210,8 @@ services:
       - 8097:8097
     depends_on:
       - mongodbservice
-      - eurekaserver
-      - configserver
+      - eureka-service
+      - config-service
     restart: always
 
   tag-service:
@@ -223,8 +223,8 @@ services:
       - 8070:8070
     depends_on:
       - mongodbservice
-      - eurekaserver
-      - configserver
+      - eureka-service
+      - config-service
     restart: always
 
   user-service:
@@ -236,8 +236,8 @@ services:
       - 8090:8090
     depends_on:
       - mongodbservice
-      - eurekaserver
-      - configserver
+      - eureka-service
+      - config-service
     restart: always
 
   candidate-service:
@@ -250,8 +250,8 @@ services:
     ports:
       - 4200:4200
     depends_on:
-      - eurekaserver
-      - configserver
+      - eureka-service
+      - config-service
 
   rabbitmq:
     image: rabbitmq:management
