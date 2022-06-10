@@ -201,7 +201,7 @@ services:
       - authentication-service
     restart: always
 
-  interviewer-service:
+  interview-service:
     container_name: interviewer-service-container
     build: interview-service/
     hostname: localhost
@@ -248,7 +248,7 @@ services:
     network_mode: host
     hostname: localhost
     ports:
-      - 4200:4200
+      - 8087:8087
     depends_on:
       - eureka-service
       - config-service
