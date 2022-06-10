@@ -67,18 +67,17 @@ public class TagControllerTest {
     @Test
     void testBookSlot() throws Exception {
         when(tagService.save(any())).thenReturn(slotsBooked);
-        mockMvc.perform(post("/api/v1/tagservice/book-slot")
+        mockMvc.perform(post("/api/v1/book-slot")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonToString(slotsBooked)))
                 .andExpect(status().isOk());
-        ;
         verify(tagService, times(1)).save(any());
     }
 
     @Test
     void testUpdateSlot() throws Exception {
         when(tagService.updateSlot(any())).thenReturn(slotsBooked);
-        mockMvc.perform(patch("/api/v1/tagservice/update-slot")
+        mockMvc.perform(patch("/api/v1/update-slot")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonToString(slotsBooked)))
                 .andExpect(status().isOk());
@@ -89,7 +88,7 @@ public class TagControllerTest {
     @Test
     void slotByTag() throws Exception {
         when(tagService.findByTagEmailId(any())).thenReturn(slotsList);
-        mockMvc.perform(get("/api/v1/tagservice/slot/tag/" + email)
+        mockMvc.perform(get("/api/v1/slot/tag/" + email)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonToString(slotsBooked)))
                 .andExpect(status().isOk());
@@ -99,7 +98,7 @@ public class TagControllerTest {
     @Test
     void slotByinterviewer() throws Exception {
         when(tagService.findByInterviewerEmailId(any())).thenReturn(slotsList);
-        mockMvc.perform(get("/api/v1/tagservice/slot/interviewer/" + email)
+        mockMvc.perform(get("/api/v1/slot/interviewer/" + email)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonToString(slotsBooked)))
                 .andExpect(status().isOk());
@@ -120,5 +119,4 @@ public class TagControllerTest {
         }
         return result;
     }
-
 }
