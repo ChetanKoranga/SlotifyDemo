@@ -45,9 +45,7 @@ public class CandidateServiceTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Mock
 
-    private UUID uuid;
 
     private JobApplication jobApplication;
     private Job job;
@@ -140,15 +138,8 @@ public class CandidateServiceTest {
     }
 //
 
-    @Test
-    public void testFindNotificationsByTopicId() throws Exception {
-        String topicId = UUID.randomUUID().toString();
-        List<JobApplication> expectedList = new ArrayList<>();
 
 
-
-        Assert.assertEquals(topicId, serv.save(job));
-    }
 
 
 

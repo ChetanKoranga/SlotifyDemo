@@ -25,7 +25,7 @@ public class CandidateController {
 
     @PostMapping("/jobpost")//calls the method in service layer to save new data of job postings
     public ResponseEntity<Job> save(@RequestBody Job job) {
-             //  job.setJobTitle(job.getJobTitle());
+              job.setJobTitle(job.getJobTitle());
         return ResponseEntity.ok().body(this.serv.save(job));
     }
 
