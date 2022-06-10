@@ -129,24 +129,25 @@
 
 version: "3.3"
 services:
-  mysqlservice:
+  postgresservice:
     image: postgres
     ports:
       - 5432:5432
     container_name: postgres-container
     network_mode: host
     hostname: localhost
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_USERNAME: root
-      #      MYSQL_PASSWORD: Global@145#
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root123
+      POSTGRES_DB: Slotify
 
   mongodbservice:
     image: mongo:latest
     container_name: mongo-container
     network_mode: host
     hostname: localhost
+    restart: always
     ports:
       - 27017:27017
 
@@ -155,6 +156,7 @@ services:
     build: config-service/
     hostname: localhost
     network_mode: host
+    restart: always
     ports:
       - 8888:8888
 
@@ -163,6 +165,7 @@ services:
     build: eureka-service/
     hostname: localhost
     network_mode: host
+    restart: always
     ports:
       - 8761:8761
 
@@ -171,6 +174,7 @@ services:
     build: api-gateway/
     hostname: localhost
     network_mode: host
+    restart: always
     ports:
       - 8080:8080
 
@@ -255,6 +259,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:management
+    restart: always
     ports:
       - "5672:5672"
       - "15672:15672"
