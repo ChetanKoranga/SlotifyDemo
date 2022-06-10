@@ -7,6 +7,7 @@ import com.stackroute.Models.Interviewer;
 import com.stackroute.Models.TAGMemeber;
 import com.stackroute.exceptions.AlreadyExitException;
 import com.stackroute.exceptions.ResourceNotFoundException;
+import com.stackroute.repository.CandidateRepo;
 import com.stackroute.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/userservice")
@@ -22,6 +25,9 @@ public class userController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CandidateRepo candidateRepo;
 
 
     //registering new interviewer
@@ -37,38 +43,39 @@ public class userController {
         userService.registerTAGMember(tagMemeberDto);
         return new ResponseEntity<>("Registration Successful", HttpStatus.CREATED);
     }
-   /* @PostMapping("/register-Candidate")
-    public ResponseEntity<CandidateDto> registerCandidate(@RequestBody CandidateDto candidateDto) {
 
-    Candidate candidateReqest = modelMapper.map(candidateDto, Candidate.class);
-    Candidate candidate = userService.registerCandidate(candidateReqest);
-    CandidateDto candidateResponse = modelMapper.map(candidate, CandidateDto.class);
+    /* @PostMapping("/register-Candidate")
+     public ResponseEntity<CandidateDto> registerCandidate(@RequestBody CandidateDto candidateDto) {
 
-     return new ResponseEntity<CandidateDto>(candidateResponse, HttpStatus.CREATED);
+     Candidate candidateReqest = modelMapper.map(candidateDto, Candidate.class);
+     Candidate candidate = userService.registerCandidate(candidateReqest);
+     CandidateDto candidateResponse = modelMapper.map(candidate, CandidateDto.class);
+
+      return new ResponseEntity<CandidateDto>(candidateResponse, HttpStatus.CREATED);
 
 
 
-      }*/
-     @PostMapping("/register-Candidate")
-     public ResponseEntity<Candidate> registerCandidate (@RequestBody Candidate candidate){
-         userService.registerCandidate(candidate);
-         return ResponseEntity.status(HttpStatus.CREATED).build();
-      }
+       }*/
+    @PostMapping("/register-Candidate")
+    public ResponseEntity<Candidate> registerCandidate(@RequestBody Candidate candidate) {
+        userService.registerCandidate(candidate);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
-             // updating interviewer
+    // updating interviewer
 
-         @PutMapping("/updateinterviewer/{emailId}")
-    public ResponseEntity<Interviewer> updateinterviewerdetails(@PathVariable String emailId, @RequestBody Interviewer interviewer) throws ResourceNotFoundException {
-        interviewer.setEmailId(emailId);
+    @PutMapping("/updateinterviewer")
+    public ResponseEntity<Interviewer> updateinterviewerdetails(  @RequestBody Interviewer interviewer) throws ResourceNotFoundException {
+
         return ResponseEntity.ok().body(this.userService.updateInterviewer(interviewer));
     }
 
 
     //updating TAG team member
 
-    @PutMapping("/updatetagmember/{emailId}")
-    public ResponseEntity<TAGMemeber> updatetagmemberdetails(@PathVariable String emailId, @RequestBody TAGMemeber tagMemeber) {
-        tagMemeber.setEmailId(emailId);
+    @PutMapping("/updatetagmember")
+    public ResponseEntity<TAGMemeber> updatetagmemberdetails( @RequestBody TAGMemeber tagMemeber) throws ResourceNotFoundException {
+
         return ResponseEntity.ok().body(this.userService.updateTAGMember(tagMemeber));
     }
 
@@ -82,12 +89,40 @@ public class userController {
 
     @GetMapping("/findBytechtrack/{techTrack}")
     public ResponseEntity<List<Interviewer>> getByTechTrack(@PathVariable String techTrack) {
-          userService.getByTechTrack(techTrack);
+        userService.getByTechTrack(techTrack);
         return new ResponseEntity<>(userService.getByTechTrack(techTrack), HttpStatus.IM_USED);
 
     }
 
-}
+//
+//    public ResponseEntity<Candidate> getCandidateByemailid(@PathVariable String emailId) {
+//        Candidate can = null;
+//        Optional<Candidate> candidate = candidateRepo.findById(emailId);
+//        if (candidate.isPresent()) {
+//            can = candidate.get();
+//            return new ResponseEntity<Candidate>(can, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<Candidate>(HttpStatus.BAD_REQUEST);
+//        }
+
+
+//
+//    @PutMapping("/updatecandidate/{emailId}")
+//    public ResponseEntity<Candidate> updatecandidatedetails1(@PathVariable String emailId, @RequestBody Candidate candidate) {
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 

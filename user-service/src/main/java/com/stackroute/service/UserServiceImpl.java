@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public InterviewerDto registerInterviewer(InterviewerDto interviewerDto) throws AlreadyExitException {
+    public Interviewer registerInterviewer(InterviewerDto interviewerDto) throws AlreadyExitException {
         Interviewer interviewer;
         InterviewerDto interviewerResoponse;
         if (this.interviewerRepo.findById(interviewerDto.getEmailId()).isPresent()) {
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            return interviewerResoponse;
+            return interviewer;
         }
     }
 
@@ -90,16 +90,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Interviewer updateInterviewer(Interviewer interviewer) throws ResourceNotFoundException {
 
-        Optional<Interviewer> Slotify1 = this.interviewerRepo.findById(interviewer.getEmailId());
-        if (this.interviewerRepo.findById(interviewer.getEmailId()).isPresent()) {
-            Interviewer editInterviewer = Slotify1.get();
-            editInterviewer.setEmailId(interviewer.getEmailId());
-            editInterviewer.setFirstName(interviewer.getFirstName());
-            editInterviewer.setLastName(interviewer.getLastName());
-            editInterviewer.setMobileNumber(interviewer.getMobileNumber());
-            editInterviewer.setTechTrack(interviewer.getTechTrack());
-            interviewerRepo.save(editInterviewer);
-            return editInterviewer;
+        //Optional<Interviewer> Slotify1 = this.interviewerRepo.findById(interviewer.getEmailId());
+        if (interviewerRepo.existsById(interviewer.getEmailId())) {
+
+
+            return interviewerRepo.save(interviewer);
         } else {
             throw new ResourceNotFoundException();
         }
@@ -107,15 +102,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
 
-    public TAGMemeber updateTAGMember(TAGMemeber tagMemeber) {
+    public TAGMemeber updateTAGMember(TAGMemeber tagMemeber) throws ResourceNotFoundException{
 
-        Optional<TAGMemeber> Slotify1 = this.tagMemeberRepo.findById(tagMemeber.getEmailId());
-        TAGMemeber editTAGMember = Slotify1.get();
-        editTAGMember.setEmailId(tagMemeber.getEmailId());
-        editTAGMember.setFirstName(tagMemeber.getFirstName());
-        editTAGMember.setLastName(tagMemeber.getLastName());
-        tagMemeberRepo.save(editTAGMember);
-        return editTAGMember;
+       // Optional<TAGMemeber> Slotify1 = this.tagMemeberRepo.findById(tagMemeber.getEmailId());
+        if (tagMemeberRepo.existsById(tagMemeber.getEmailId())) {
+
+            return tagMemeberRepo.save(tagMemeber);
+
+        }else {
+            throw new ResourceNotFoundException();
+        }
+//        TAGMemeber editTAGMember = Slotify1.get();
+//        editTAGMember.setEmailId(tagMemeber.getEmailId());
+//        editTAGMember.setFirstName(tagMemeber.getFirstName());
+//        editTAGMember.setLastName(tagMemeber.getLastName());
+//        tagMemeberRepo.save(editTAGMember);
+//        return editTAGMember;
     }
 
     @Override

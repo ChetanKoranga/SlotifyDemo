@@ -13,27 +13,27 @@ import org.springframework.stereotype.Component;
 public class ConsumerListener {
 
 
-//    public static final String EMAIL_NOTIFICATION_TO_INTERVIEWER = "email_notification_to_interviewer";
-//    public static final String EMAIL_NOTIFICATION_TO_TAG = "email_notification_to_tag";
-//
-//
-//    @RabbitListener(queues = EMAIL_NOTIFICATION_TO_INTERVIEWER)
-//    public void emailToInterviewer(ConsumerDTO consumerDTO) throws Exception {
-//        try{
-//            System.out.println("");
-//        }
-//        catch (Exception e){
-//            throw new Exception(e);
-//        }
-//    }
-//
-//    @RabbitListener(queues = EMAIL_NOTIFICATION_TO_TAG)
-//    public void emailToTag(ConsumerDTO consumerDTO) throws Exception {
-//        try{
-//            System.out.println("");
-//        }
-//        catch (Exception e){
-//            throw new Exception(e);
-//        }
-//    }
+    public static final String EMAIL_NOTIFICATION_TO_INTERVIEWER = "email_notification_to_interviewer";
+    public static final String EMAIL_NOTIFICATION_TO_TAG = "email_notification_to_tag";
+
+
+    @RabbitListener(queues = EMAIL_NOTIFICATION_TO_INTERVIEWER)
+    public void emailToInterviewer(ConsumerDTO consumerDTO) throws Exception {
+        try{
+            System.out.println("");
+        }
+        catch (Exception e){
+            throw new Exception(e);
+        }
+    }
+
+    @RabbitListener(queues = EMAIL_NOTIFICATION_TO_TAG)
+    public void emailToTag(ConsumerDTO consumerDTO) throws Exception {
+        try{
+            System.out.println("");
+        }
+        catch (Exception e){
+            throw new Exception(e);
+        }
+    }
 }

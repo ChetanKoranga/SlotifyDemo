@@ -5,7 +5,7 @@ date of creation: 31/05/22
 
 package com.stackroute.interviewerservice.publisher;
 
-import com.stackroute.Config.MessagingConfig;
+import com.stackroute.interviewerservice.Config.MessagingConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
