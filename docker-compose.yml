@@ -29,7 +29,7 @@ services:
       MYSQL_PASSWORD: root123
 
   eureka-service:
-    image: eureka-service:1.0
+    image: eureka-service
     build: eureka-service/
     container_name: eureka-service-container
     network_mode: host
@@ -124,6 +124,141 @@ services:
     depends_on:
       - eureka-service
       - config-service
+
+
+
+version: "3.3"
+services:
+  mysqlservice:
+    image: mysql
+    ports:
+      - 3306:3306
+    container_name: mysql-container
+    network_mode: host
+    hostname: localhost
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_USERNAME: root
+      #      MYSQL_PASSWORD: Global@145#
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  mongodbservice:
+    image: mongo:latest
+    container_name: mongo-container
+    network_mode: host
+    hostname: localhost
+    ports:
+      - 27017:27017
+
+  config-service:
+    container_name: config-server-container
+    build: config-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8888:8888
+
+  eureka-service:
+    container_name: eureka-server-container
+    build: eureka-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8761:8761
+
+  api-gateway:
+    container_name: api-gateway-container
+    build: api-gateway/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8080:8080
+
+  authentication-service:
+    container_name: authentication-service-container
+    build: authentication-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8095:8095
+    depends_on:
+      - mysqlservice
+      - eurekaserver
+      - configserver
+    restart: always
+
+  email-service:
+    container_name: email-service-container
+    build: email-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8075:8075
+    depends_on:
+      - mysqlservice
+      - eurekaserver
+      - configserver
+      - authenticationservice
+    restart: always
+
+  interviewer-service:
+    container_name: interviewer-service-container
+    build: interview-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8097:8097
+    depends_on:
+      - mongodbservice
+      - eurekaserver
+      - configserver
+    restart: always
+
+  tag-service:
+    container_name: tag-service-container
+    build: tag-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8070:8070
+    depends_on:
+      - mongodbservice
+      - eurekaserver
+      - configserver
+    restart: always
+
+  user-service:
+    container_name: user-service-container
+    build: user-service/
+    hostname: localhost
+    network_mode: host
+    ports:
+      - 8090:8090
+    depends_on:
+      - mongodbservice
+      - eurekaserver
+      - configserver
+    restart: always
+
+  candidate-service:
+    build: candidate-service/
+    image: candidate-service
+    restart: always
+    container_name: candidate-service-container
+    network_mode: host
+    hostname: localhost
+    ports:
+      - 4200:4200
+    depends_on:
+      - eurekaserver
+      - configserver
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
 
 
 
