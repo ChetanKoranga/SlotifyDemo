@@ -201,9 +201,9 @@ services:
       - authentication-service
     restart: always
 
-  interview-service:
+  interviewer-service:
     container_name: interviewer-service-container
-    build: interview-service/
+    build: interviewer-service/
     hostname: localhost
     network_mode: host
     ports:
