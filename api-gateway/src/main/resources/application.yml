@@ -47,3 +47,10 @@ spring:
             - Path=/tagservice/**
           filters:
             - RewritePath=/tagservice(?<segment>/?.*), $\{segment}
+
+        - id: userservice
+          uri: lb://userservice
+          predicates:
+            - Path=/userservice/**
+          filters:
+            - RewritePath=/userservice(?<segment>/?.*), $\{segment}
