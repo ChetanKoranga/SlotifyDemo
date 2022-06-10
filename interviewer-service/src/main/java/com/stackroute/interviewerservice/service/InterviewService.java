@@ -14,9 +14,9 @@ public interface InterviewService {
      InterviewerEntity createInterview(InterviewerEntity interviewerEntity) throws interviewIdNotExists;
 
      InterviewerEntity updateInterview(InterviewerEntity interviewerEntity) throws profileAlreadyExists;
-     public void deleteById(String slot_id)throws RecordNotFound;
+     public InterviewerEntity deleteById(String slot_id)throws RecordNotFound;
 
-     InterviewerEntity updateSlot(InterviewerEntity interviewerEntity)throws profileAlreadyExists;
+
 
 
 

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackroute.models.Resume;
 import com.stackroute.models.SlotStatus;
-import com.stackroute.models.SlotUpdate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -31,13 +29,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import com.stackroute.models.SlotsBooked;
 import com.stackroute.services.TagService;
 import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Date;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class TagControllerTest {
@@ -48,9 +45,6 @@ public class TagControllerTest {
     TagService tagService;
     @InjectMocks
     TagController tagController;
-
-
-    MockMvcBuilder mockBuilder;
 
     private SlotsBooked slotsBooked;
     private Resume resume;
@@ -73,28 +67,42 @@ public class TagControllerTest {
     @Test
     void testBookSlot() throws Exception {
         when(tagService.save(any())).thenReturn(slotsBooked);
-        mockMvc.perform(post("/api/v1/tagservice/book-slot").contentType(MediaType.APPLICATION_JSON).content(jsonToString(slotsBooked)));
+        mockMvc.perform(post("/api/v1/book-slot")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonToString(slotsBooked)))
+                .andExpect(status().isOk());
         verify(tagService, times(1)).save(any());
     }
 
     @Test
     void testUpdateSlot() throws Exception {
         when(tagService.updateSlot(any())).thenReturn(slotsBooked);
-        mockMvc.perform(patch("/api/v1/tagservice/update-slot").contentType(MediaType.APPLICATION_JSON).content(jsonToString(slotsBooked)));
+        mockMvc.perform(patch("/api/v1/update-slot")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonToString(slotsBooked)))
+                .andExpect(status().isOk());
+        ;
         verify(tagService, times(1)).updateSlot(any());
     }
 
     @Test
     void slotByTag() throws Exception {
         when(tagService.findByTagEmailId(any())).thenReturn(slotsList);
-        mockMvc.perform(get("/api/v1/tagservice/slot/tag/" + email).contentType(MediaType.APPLICATION_JSON).content(jsonToString(slotsBooked)));
+        mockMvc.perform(get("/api/v1/slot/tag/" + email)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonToString(slotsBooked)))
+                .andExpect(status().isOk());
         verify(tagService, times(1)).findByTagEmailId(any());
     }
 
     @Test
     void slotByinterviewer() throws Exception {
         when(tagService.findByInterviewerEmailId(any())).thenReturn(slotsList);
-        mockMvc.perform(get("/api/v1/tagservice/slot/interviewer/" + email).contentType(MediaType.APPLICATION_JSON).content(jsonToString(slotsBooked)));
+        mockMvc.perform(get("/api/v1/slot/interviewer/" + email)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonToString(slotsBooked)))
+                .andExpect(status().isOk());
+        ;
         verify(tagService, times(1)).findByInterviewerEmailId(any());
     }
 
@@ -111,5 +119,4 @@ public class TagControllerTest {
         }
         return result;
     }
-
 }

@@ -9,7 +9,6 @@ import com.stackroute.interviewerservice.model.InterviewerEntity;
 import com.stackroute.interviewerservice.reprository.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +66,7 @@ public class InterviewServiceImp implements InterviewService{
         }
 
     @Override
-    public void deleteById(String slot_id)throws RecordNotFound {
+    public InterviewerEntity deleteById(String slot_id)throws RecordNotFound {
         Optional < InterviewerEntity> slotid = this.interviewRepository.findById(slot_id);
 
         if (slotid.isPresent()) {
@@ -75,28 +74,12 @@ public class InterviewServiceImp implements InterviewService{
         } else {
             throw new RecordNotFound();
         }
-
+          return null;
     }
 
-    @Override
-    public InterviewerEntity updateSlot(InterviewerEntity interviewerEntity) throws profileAlreadyExists{
-        Optional<InterviewerEntity> schedulseeasy = this.interviewRepository.findById(interviewerEntity.getSlot_id());
-        if (this.interviewRepository.findById(interviewerEntity.getSlot_id()).isPresent()) {
 
-            InterviewerEntity updateSlot = schedulseeasy.get();
-            updateSlot.setSlot_id(interviewerEntity.getSlot_id());
-            updateSlot.setSlot_date(interviewerEntity.getSlot_date());
-            updateSlot.setStart_time(interviewerEntity.getStart_time());
-            updateSlot.setEnd_time(interviewerEntity.getEnd_time());
-            interviewRepository.save(updateSlot);
-
-            return updateSlot;
-        }else{
-            throw new profileAlreadyExists();
-
-        }
 
     }
 
 
-}
+

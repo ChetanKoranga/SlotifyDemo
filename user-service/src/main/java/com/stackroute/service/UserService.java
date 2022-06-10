@@ -13,14 +13,14 @@ import java.util.List;
 
 public interface UserService {
 
-    InterviewerDto registerInterviewer(InterviewerDto interviewer)throws AlreadyExitException;
+    Interviewer registerInterviewer(InterviewerDto interviewer)throws AlreadyExitException;
     TAGMemeberDto registerTAGMember (TAGMemeberDto tagMemeber) throws Exception;
 
     Candidate registerCandidate(CandidateDto candidate) throws Exception;
 
     Interviewer updateInterviewer(Interviewer interviewer)throws ResourceNotFoundException;
 
-    TAGMemeber updateTAGMember(TAGMemeber tagMemeber);
+    TAGMemeber updateTAGMember(TAGMemeber tagMemeber)throws  ResourceNotFoundException;
 
     Candidate updateCandidate(CandidateDto candidateDto) throws Exception;
 

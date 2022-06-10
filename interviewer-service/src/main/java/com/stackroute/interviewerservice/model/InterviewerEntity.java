@@ -23,7 +23,7 @@ public class InterviewerEntity{
     private String slot_id = UUID.randomUUID().toString();
     private String interviewer_emailId;
     @JsonFormat(pattern="yyyy-MM-dd")
-    private Date slot_date;
+    private String slot_date;
     @JsonFormat(pattern="HH:mm:ss")
     private String start_time;
     @JsonFormat(pattern="HH:mm:ss")

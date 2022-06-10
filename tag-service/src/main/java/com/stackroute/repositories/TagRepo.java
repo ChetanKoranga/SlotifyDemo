@@ -13,7 +13,6 @@ import java.util.Optional;
 
 // No need implementation, just one interface, and you have CRUD, thanks Spring Data!
 public interface TagRepo extends MongoRepository<SlotsBooked, String> {
-    //    List<SlotBooking> findAll();
     List<SlotsBooked> findByTagEmailId(String tagEmailId);
 
     List<SlotsBooked> findByInterviewerEmailId(String email);
